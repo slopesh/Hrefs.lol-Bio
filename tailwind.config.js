@@ -22,6 +22,9 @@ module.exports = {
           900: '#0c4a6e',
           950: '#082f49',
         },
+        dark: {
+          100: '#1a202c',
+        },
         // Refined dark and gray colors based on cortex.rest
         background: '#111111', // Pitch dark background
         text: {
