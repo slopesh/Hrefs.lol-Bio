@@ -24,6 +24,7 @@ module.exports = {
         },
         dark: {
           100: '#1a202c',
+          200: '#2d3748',
         },
         // Refined dark and gray colors based on cortex.rest
         background: '#111111', // Pitch dark background
