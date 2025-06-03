@@ -19,11 +19,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Amount is required' }, { status: 400 });
     }
 
-    const payment = await createPayment({
+    const payment = await createPayment(
+      session.user.id,
       amount,
-      currency,
-      userId: session.user.id,
-    });
+      currency
+    );
 
     return NextResponse.json(payment);
   } catch (error) {
