@@ -4,109 +4,221 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 7%;
+    --foreground: 210 40% 98%;
   }
 
   @font-face {
     font-family: 'SF Pro Display';
-    src: local('SF Pro Display');
+    src: url('/fonts/SF-Pro-Display-Regular.woff2') format('woff2');
     font-weight: 400;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'SF Pro Display';
-    src: local('SF Pro Display');
-    font-weight: 600;
+    font-style: normal;
     font-display: swap;
   }
 
   @font-face {
     font-family: 'SF Pro Text';
-    src: local('SF Pro Text');
+    src: url('/fonts/SF-Pro-Text-Regular.woff2') format('woff2');
     font-weight: 400;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'SF Pro Text';
-    src: local('SF Pro Text');
-    font-weight: 600;
+    font-style: normal;
     font-display: swap;
   }
 
   @font-face {
     font-family: 'Poppins';
-    src: local('Poppins');
+    src: url('/fonts/Poppins-Regular.woff2') format('woff2');
     font-weight: 400;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'Poppins';
-    src: local('Poppins');
-    font-weight: 600;
+    font-style: normal;
     font-display: swap;
   }
 
   html {
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
   }
 
   body {
-    @apply bg-dark-100 text-white antialiased;
+    @apply bg-background text-text;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500;
+    @apply bg-primary-500 text-white hover:bg-primary-600 focus-visible:ring-primary-400;
   }
 
   .btn-secondary {
     @apply bg-dark-200 text-white hover:bg-dark-300 focus-visible:ring-dark-400;
   }
 
+  .btn-outline {
+    @apply border border-dark-200 bg-transparent hover:bg-dark-200 hover:text-white focus-visible:ring-dark-400;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-dark-200 hover:text-white focus-visible:ring-dark-400;
+  }
+
   .input {
-    @apply flex h-10 w-full rounded-md border border-dark-300 bg-dark-200 px-3 py-2 text-sm text-white placeholder:text-dark-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex h-10 w-full rounded-md border border-dark-200 bg-dark-100 px-3 py-2 text-sm text-text placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dark-400 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+    @apply inline-flex items-center rounded-full border border-dark-200 px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-dark-400 focus:ring-offset-2;
   }
 
   .badge-primary {
-    @apply bg-primary-100 text-primary-800;
+    @apply bg-primary-500 text-white hover:bg-primary-600;
   }
 
   .badge-secondary {
-    @apply bg-dark-200 text-white;
+    @apply bg-dark-200 text-white hover:bg-dark-300;
+  }
+
+  .badge-outline {
+    @apply border-dark-200 text-text hover:bg-dark-200 hover:text-white;
   }
 
   .card {
-    @apply rounded-lg border border-dark-300 bg-dark-200 p-6;
+    @apply rounded-lg border border-dark-200 bg-dark-100 p-6;
+  }
+
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  .card-title {
+    @apply text-2xl font-semibold leading-none tracking-tight;
+  }
+
+  .card-description {
+    @apply text-sm text-text-secondary;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  .card-footer {
+    @apply flex items-center p-6 pt-0;
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar styles */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  @apply w-2;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-dark-200;
+  @apply bg-dark-100;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-dark-400 rounded-full;
+  @apply rounded-full bg-dark-300 hover:bg-dark-400;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-dark-500;
+/* Gradient animations */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-600 animate-gradient-x;
+}
+
+.gradient-border {
+  @apply relative;
+}
+
+.gradient-border::before {
+  @apply absolute inset-0 rounded-lg p-[1px] bg-gradient-to-r from-primary-400 to-primary-600 animate-gradient-x -z-10;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  @apply animate-spin rounded-full border-2 border-dark-200 border-t-primary-500;
+}
+
+/* Tooltip */
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-dark-400 focus:ring-offset-2;
+}
+
+/* Transitions */
+.transition-all {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+/* Hover effects */
+.hover-lift {
+  @apply transition-transform hover:-translate-y-1;
+}
+
+.hover-scale {
+  @apply transition-transform hover:scale-105;
+}
+
+/* Glass effect */
+.glass {
+  @apply bg-dark-100/80 backdrop-blur-sm border border-dark-200/50;
+}
+
+/* Text gradients */
+.text-gradient-primary {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-600;
+}
+
+.text-gradient-dark {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-dark-300 to-dark-500;
+}
+
+/* Custom utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Animation keyframes */
+@keyframes gradient-x {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+@keyframes gradient-y {
+  0%, 100% {
+    background-size: 400% 400%;
+    background-position: center top;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: center center;
+  }
+}
+
+@keyframes gradient-xy {
+  0%, 100% {
+    background-size: 400% 400%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
 } 

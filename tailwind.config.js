@@ -22,15 +22,15 @@ module.exports = {
           900: '#0c4a6e',
           950: '#082f49',
         },
-        dark: {
-          100: '#1a202c',
-          200: '#2d3748',
-        },
-        // Refined dark and gray colors based on cortex.rest
-        background: '#111111', // Pitch dark background
+        'dark-100': '#1a202c',
+        'dark-200': '#2d3748',
+        'dark-300': '#4a5568',
+        'dark-400': '#718096',
+        'dark-500': '#a0aec0',
+        background: '#111111',
         text: {
-          DEFAULT: '#d1d5db', // Grayish-white default text
-          secondary: '#9ca3af', // Slightly darker gray for secondary text
+          DEFAULT: '#d1d5db',
+          secondary: '#9ca3af',
         },
       },
       fontFamily: {
