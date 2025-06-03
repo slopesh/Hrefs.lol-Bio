@@ -152,11 +152,6 @@
   @apply focus:outline-none focus:ring-2 focus:ring-dark-400 focus:ring-offset-2;
 }
 
-/* Transitions */
-.transition-all {
-  @apply transition-all duration-200 ease-in-out;
-}
-
 /* Hover effects */
 .hover-lift {
   @apply transition-transform hover:-translate-y-1;
