@@ -2,7 +2,7 @@
 // import { Inter, Roboto_Mono } from 'next/font/google' // Removed Google Font import
 import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
-import { SessionProvider } from 'next-auth/react'
+import { Providers } from './providers'
 
 // Removed font configurations since we are using system fonts via Tailwind
 // const inter = localFont({...})
@@ -38,9 +38,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-dark-100 text-white antialiased">
-        <SessionProvider>
+        <Providers>
           {children}
-        </SessionProvider>
+        </Providers>
         <Analytics />
       </body>
     </html>
