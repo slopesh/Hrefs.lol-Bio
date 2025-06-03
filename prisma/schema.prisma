@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  username      String    @unique
+  name          String?
+  avatar        String?
+  banner        String?
+  bio           String?
+  title         String?
+  theme         String    @default("clean")
+  layout        String    @default("stacked")
+  isVerified    Boolean   @default(false)
+  isAdmin       Boolean   @default(false)
+  isSuspended   Boolean   @default(false)
+  isFeatured    Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  inviteCode    String?
+  bioPage       BioPage?
+  links         Link[]
+  badges        Badge[]
+  analytics     Analytics[]
+  createdInviteCodes InviteCode[] @relation("CreatedInviteCodes")
+  usedInviteCode     InviteCode?  @relation("UsedInviteCode")
+  payments      Payment[]
+  paymentMethods PaymentMethod[]
+}
+
+model BioPage {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customDomain  String?
+  isPublished   Boolean   @default(false)
+  draftData     Json?
+  publishedData Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Link {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title         String
+  url           String
+  icon          String?
+  order         Int
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Badge {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  description   String
+  icon          String
+  color         String
+  users         User[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model InviteCode {
+  id            String    @id @default(cuid())
+  code          String    @unique
+  createdById   String
+  createdBy     User      @relation("CreatedInviteCodes", fields: [createdById], references: [id])
+  usedById      String?   @unique
+  usedBy        User?     @relation("UsedInviteCode", fields: [usedById], references: [id])
+  isUsed        Boolean   @default(false)
+  expiresAt     DateTime?
+  createdAt     DateTime  @default(now())
+}
+
+model Analytics {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type          String    // "view" | "click"
+  linkId        String?
+  ip            String?
+  userAgent     String?
+  referrer      String?
+  country       String?
+  city          String?
+  createdAt     DateTime  @default(now())
+}
+
+model Payment {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount        Float
+  currency      String
+  status        PaymentStatus @default(PENDING)
+  paymentMethod PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId String
+  transactionId String?   @unique
+  metadata      Json?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  history       PaymentHistory[]
+}
+
+model PaymentMethod {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type          PaymentType
+  name          String
+  isDefault     Boolean   @default(false)
+  details       Json
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  payments      Payment[]
+}
+
+model PaymentHistory {
+  id            String    @id @default(cuid())
+  paymentId     String
+  payment       Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  status        PaymentStatus
+  message       String?
+  metadata      Json?
+  createdAt     DateTime  @default(now())
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentType {
+  CRYPTO
+  CARD
+  BANK_TRANSFER
+  PAYPAL
+} 
