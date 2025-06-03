@@ -1,4 +1,18 @@
 import React from 'react';
+import {
+  User,
+  Gem,
+  Link,
+  Gamepad2,
+  Mail,
+  Bot,
+  Code,
+  Crosshair,
+  Globe,
+  Headphones,
+  Briefcase,
+  LucideIcon
+} from 'lucide-react';
 
 interface BioCardProps {
   username: string;
@@ -8,6 +22,21 @@ interface BioCardProps {
   musicPlayer?: { track: string; artist: string; duration: string; };
   backgroundImage: string;
 }
+
+// Mapping of icon names to Lucide components
+const iconMap: { [key: string]: LucideIcon } = {
+  user: User,
+  gem: Gem,
+  link: Link,
+  gamepad2: Gamepad2,
+  mail: Mail,
+  bot: Bot,
+  code: Code,
+  crosshair: Crosshair,
+  globe: Globe,
+  headphones: Headphones,
+  briefcase: Briefcase,
+};
 
 const BioCard: React.FC<BioCardProps> = ({
   username,
@@ -38,12 +67,14 @@ const BioCard: React.FC<BioCardProps> = ({
 
         {/* Social Links */}
         <div className="flex justify-center gap-4 mb-4">
-          {socialLinks.map((link, index) => (
-            <a key={index} href={link.url} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-DEFAULT">
-              {/* Placeholder for social icon - replace with actual icons */}
-              {link.icon}
-            </a>
-          ))}
+          {socialLinks.map((link, index) => {
+            const IconComponent = iconMap[link.icon];
+            return (
+              <a key={index} href={link.url} target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-text-DEFAULT transition-colors duration-200">
+                {IconComponent ? <IconComponent className="w-6 h-6" /> : link.icon}
+              </a>
+            );
+          })}
         </div>
 
         {/* Music Player (optional) */}

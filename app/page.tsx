@@ -6,8 +6,27 @@ import BioCard from './components/BioCard'
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useEffect } from 'react';
+import {
+  Layout,
+  Globe,
+  BarChart2,
+  Badge,
+  Smartphone,
+  Bot,
+  LucideIcon // Import LucideIcon type
+} from 'lucide-react'; // Import Lucide icons
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Mapping of icon names to Lucide components
+const iconMap: { [key: string]: LucideIcon } = {
+  Layout: Layout,
+  Globe: Globe,
+  BarChart2: BarChart2,
+  Badge: Badge,
+  Smartphone: Smartphone,
+  Bot: Bot,
+};
 
 export default function Home() {
 
@@ -86,7 +105,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-text-DEFAULT font-sans overflow-hidden">
+    <div className="flex min-h-screen flex-col bg-dark-background text-text-DEFAULT font-sans overflow-hidden">
       {/* Navigation */}
       <nav className="border-b border-dark-300 bg-dark-200/50 backdrop-blur-sm">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -96,7 +115,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex items-center space-x-6">
-            <Link href="/store" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
+            <Link href="/store" className="text-text-secondary hover:text-white transition-colors duration-200 font-sans">
               Store
             </Link>
             <Link href="/discord" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
@@ -117,10 +136,10 @@ export default function Home() {
         <div className="relative isolate overflow-hidden py-14 border-b border-dark-300">
           <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10 rounded-xl border border-dark-300 p-6">
             <div className="mx-auto max-w-2xl text-center">
-              <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-6xl hero-title font-poppins">
+              <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl hero-title font-poppins">
                 Your Bio Link,
                 <br />
-                <span className="text-primary-400">Elevated</span>
+                <span className="text-accent-400">Elevated</span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-text-DEFAULT max-w-md mx-auto font-sans">
                 Create a stunning bio page that stands out. Add your links, customize your style,
@@ -129,17 +148,19 @@ export default function Home() {
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 username-claimer">
                 <div className="relative mt-2 rounded-md shadow-sm">
                   <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <span className="text-text-secondary sm:text-sm font-sans">href.lol/</span>
+                    <span className="text-text-secondary sm:text-sm font-sans">
+                      href.lol/
+                    </span>
                   </div>
                   <input
                     type="text"
                     name="username"
                     id="username"
-                    className="block w-full rounded-md border border-dark-300 bg-dark-200 py-2 pl-[4.5rem] pr-3 text-text-DEFAULT placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary-600 sm:text-sm sm:leading-6 font-sans"
+                    className="block w-full rounded-md border border-dark-300 bg-dark-200/30 backdrop-blur-sm py-2 pl-[4.5rem] pr-3 text-text-DEFAULT placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-600 sm:text-sm sm:leading-6 font-sans transition-colors duration-200"
                     placeholder="username"
                   />
                 </div>
-                <button type="button" className="btn btn-primary bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded font-poppins">
+                <button type="button" className="btn bg-accent-600/30 hover:bg-accent-700/50 text-white font-semibold py-2 px-6 rounded-md font-poppins font-bold border border-accent-600 transition-colors duration-200 backdrop-blur-sm shadow-md">
                   Claim Your Link
                 </button>
               </div>
@@ -148,45 +169,45 @@ export default function Home() {
 
           {/* Background gradient */}
           <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-            <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
+            <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
           </div>
 
           {/* Background gradient */}
           <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
-            <div className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" />
+            <div className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-10 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" />
           </div>
         </div>
 
         {/* Featured Users Section */}
-        <div className="relative overflow-hidden py-20 sm:py-28 bg-dark-100 border-b border-dark-300">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center rounded-xl border border-dark-300 p-6">
+        <div className="relative overflow-hidden py-20 sm:py-28 border-b border-dark-300">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center rounded-xl border border-dark-300 p-6 bg-dark-200/30 backdrop-blur-sm shadow-lg">
             <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl mb-12 font-poppins">
-              What are you waiting for? Join the other <span className="text-primary-400">14,958</span> users.
+              What are you waiting for? Join the other <span className="text-accent-400">14,958</span> users.
             </h2>
             <div className="flex flex-wrap justify-center gap-6">
               {/* Placeholder for featured user cards - replace with actual data mapping */}
-              <div className="w-36 h-16 rounded-md bg-dark-200 flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-transform duration-200 hover:scale-105 cursor-pointer border border-dark-300">
+              <div className="w-36 h-16 rounded-md bg-dark-background flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-all duration-200 hover:scale-105 cursor-pointer border border-dark-300 shadow-md">
                 @sheng
               </div>
-              <div className="w-36 h-16 rounded-md bg-dark-200 flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-transform duration-200 hover:scale-105 cursor-pointer border border-dark-300">
+              <div className="w-36 h-16 rounded-md bg-dark-background flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-all duration-200 hover:scale-105 cursor-pointer border border-dark-300 shadow-md">
                 @jshy
               </div>
-              <div className="w-36 h-16 rounded-md bg-dark-200 flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-transform duration-200 hover:scale-105 cursor-pointer border border-dark-300">
+              <div className="w-36 h-16 rounded-md bg-dark-background flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-all duration-200 hover:scale-105 cursor-pointer border border-dark-300 shadow-md">
                 @certii
               </div>
-              <div className="w-36 h-16 rounded-md bg-dark-200 flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-transform duration-200 hover:scale-105 cursor-pointer border border-dark-300">
+              <div className="w-36 h-16 rounded-md bg-dark-background flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-all duration-200 hover:scale-105 cursor-pointer border border-dark-300 shadow-md">
                 @unslayy
               </div>
-              <div className="w-36 h-16 rounded-md bg-dark-200 flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-transform duration-200 hover:scale-105 cursor-pointer border border-dark-300">
+              <div className="w-36 h-16 rounded-md bg-dark-background flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-all duration-200 hover:scale-105 cursor-pointer border border-dark-300 shadow-md">
                 @dma
               </div>
-              <div className="w-36 h-16 rounded-md bg-dark-200 flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-transform duration-200 hover:scale-105 cursor-pointer border border-dark-300">
+              <div className="w-36 h-16 rounded-md bg-dark-background flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-all duration-200 hover:scale-105 cursor-pointer border border-dark-300 shadow-md">
                 @hoax
               </div>
-              <div className="w-36 h-16 rounded-md bg-dark-200 flex items-center justify-center text-text-DEFAULT text-sm border border-primary-400 featured-user-card font-sans transition-transform duration-200 hover:scale-105 cursor-pointer">
+              <div className="w-36 h-16 rounded-md bg-dark-background flex items-center justify-center text-text-DEFAULT text-sm border border-accent-400 featured-user-card font-sans transition-all duration-200 hover:scale-105 cursor-pointer shadow-md">
                 @xootzie
               </div> {/* Example featured card highlight */}
-              <div className="w-36 h-16 rounded-md bg-dark-200 flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-transform duration-200 hover:scale-105 cursor-pointer border border-dark-300">
+              <div className="w-36 h-16 rounded-md bg-dark-background flex items-center justify-center text-text-DEFAULT text-sm featured-user-card font-sans transition-all duration-200 hover:scale-105 cursor-pointer border border-dark-300 shadow-md">
                 @maybescripted
               </div>
               {/* Add more placeholders as needed */}
@@ -196,23 +217,23 @@ export default function Home() {
 
         {/* Example Bios Section */}
         <div className="relative overflow-hidden py-20 sm:py-28 border-b border-dark-300">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 rounded-xl border border-dark-300 p-6">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 rounded-xl border border-dark-300 p-6 bg-dark-200/30 backdrop-blur-sm shadow-lg">
             <div className="flex flex-col items-center justify-center text-center">
               <h2 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl mb-12 font-poppins">See what you can create on href.lol</h2>
               <div className="mt-10 flex flex-wrap items-center justify-center gap-8">
                 {/* Example bio card 1 */}
-                <div className="bio-card-example">
+                <div className="bio-card-example rounded-xl overflow-hidden shadow-lg transition-all duration-200 hover:scale-105">
                   <BioCard
                     username="Aiden"
                     avatarUrl="/images/aiden-avatar.png" // Replace with actual image path
                     description="Owner/Dev @ E-Z Services"
                     socialLinks={[
-                      { icon: '👤', url: '#' },
-                      { icon: '💎', url: '#' },
-                      { icon: '🔗', url: '#' },
-                      { icon: '🎮', url: '#' },
-                      { icon: '📧', url: '#' },
-                      { icon: '🤖', url: '#' },
+                      { icon: 'user', url: '#' },
+                      { icon: 'gem', url: '#' }, // Using 'gem' for diamond
+                      { icon: 'link', url: '#' },
+                      { icon: 'gamepad2', url: '#' }, // Using 'gamepad2' for game
+                      { icon: 'mail', url: '#' },
+                      { icon: 'bot', url: '#' }, // Using 'bot' for robot
                     ]}
                     musicPlayer={{
                       track: 'what was the last thing u said',
@@ -223,19 +244,19 @@ export default function Home() {
                   />
                 </div>
                 {/* Example bio card 2 */}
-                <div className="bio-card-example">
+                <div className="bio-card-example rounded-xl overflow-hidden shadow-lg transition-all duration-200 hover:scale-105">
                   <BioCard
                     username="tsoxas"
                     avatarUrl="/images/tsoxas-avatar.png" // Replace with actual image path
                     description="Dev @ E-Z Services"
                     socialLinks={[
-                      { icon: '</>', url: '#' },
-                      { icon: '🎯', url: '#' },
-                      { icon: '🌐', url: '#' },
-                      { icon: '📧', url: '#' },
-                      { icon: '🎮', url: '#' },
-                      { icon: '🎧', url: '#' },
-                      { icon: '💼', url: '#' },
+                      { icon: 'code', url: '#' }, // Using 'code' for </>'
+                      { icon: 'crosshair', url: '#' }, // Using 'crosshair' for target
+                      { icon: 'globe', url: '#' },
+                      { icon: 'mail', url: '#' },
+                      { icon: 'gamepad2', url: '#' },
+                      { icon: 'headphones', url: '#' },
+                      { icon: 'briefcase', url: '#' },
                     ]}
                     musicPlayer={{
                       track: 'Jasiah - Shenanigans (feat. Yung Bans)',
@@ -259,7 +280,7 @@ export default function Home() {
         {/* Features Section */}
         <div className="mx-auto max-w-7xl px-6 py-20 sm:py-28 border-b border-dark-300">
           <div className="mx-auto max-w-2xl lg:text-center rounded-xl border border-dark-300 p-6">
-            <h2 className="text-base font-semibold leading-7 text-primary-400 font-poppins">Everything you need</h2>
+            <h2 className="text-base font-semibold leading-7 text-accent-400 font-poppins">Everything you need</h2>
             <p className="mt-2 text-3xl font-semibold tracking-tight text-white sm:text-4xl font-poppins">
               Features that make your bio page shine
             </p>
@@ -267,16 +288,20 @@ export default function Home() {
 
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-              {features.map((feature) => (
-                <div key={feature.name} className="flex flex-col rounded-xl border border-dark-300 bg-dark-200 p-6 shadow-lg">
-                  <dt className="flex items-center gap-x-3 text-lg font-semibold leading-7 text-white font-poppins">
-                    {feature.name}
-                  </dt>
-                  <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-text-DEFAULT font-sans">
-                    <p className="flex-auto font-sans">{feature.description}</p>
-                  </dd>
-                </div>
-              ))}
+              {features.map((feature) => {
+                const IconComponent = iconMap[feature.icon as keyof typeof iconMap];
+                return (
+                  <div key={feature.name} className="flex flex-col rounded-xl border border-dark-300 bg-dark-200/30 backdrop-blur-sm p-6 shadow-lg transition-all duration-200 hover:scale-105">
+                    <dt className="flex items-center gap-x-3 text-lg font-semibold leading-7 text-white font-poppins">
+                      {IconComponent && <IconComponent className="h-6 w-6 flex-none text-accent-400" aria-hidden="true" />} {/* Render icon component */}
+                      {feature.name}
+                    </dt>
+                    <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-text-DEFAULT font-sans">
+                      <p className="flex-auto font-sans">{feature.description}</p>
+                    </dd>
+                  </div>
+                );
+              })}
             </dl>
           </div>
         </div>
@@ -296,18 +321,18 @@ export default function Home() {
                 <div className="text-center md:text-left">
                   <h3 className="text-lg font-semibold text-white mb-4 font-poppins">Contact</h3>
                   <ul className="space-y-2">
-                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Abuse</a></li>
-                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Privacy</a></li>
-                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Support</a></li>
+                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans font-semibold transition-colors duration-200">Abuse</a></li>
+                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans font-semibold transition-colors duration-200">Privacy</a></li>
+                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans font-semibold transition-colors duration-200">Support</a></li>
                   </ul>
                 </div>
                 <div className="text-center md:text-left">
                   <h3 className="text-lg font-semibold text-white mb-4 font-poppins">Information</h3>
                   <ul className="space-y-2">
-                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Terms of Service</a></li>
-                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Platform Guidelines</a></li>
-                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Privacy Policy</a></li>
-                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">FAQ</a></li>
+                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans font-semibold transition-colors duration-200">Terms of Service</a></li>
+                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans font-semibold transition-colors duration-200">Platform Guidelines</a></li>
+                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans font-semibold transition-colors duration-200">Privacy Policy</a></li>
+                    <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans font-semibold transition-colors duration-200">FAQ</a></li>
                   </ul>
                 </div>
               </div>
@@ -315,7 +340,7 @@ export default function Home() {
 
             {/* Copyright */}
             <div className="mt-8 border-t border-dark-300 pt-8 text-center">
-              <p className="text-text-secondary text-sm font-sans">
+              <p className="text-text-secondary text-sm font-sans font-semibold">
                 &copy; {new Date().getFullYear()} href.lol. All rights reserved. Est. 2025.
               </p>
             </div>
@@ -330,25 +355,31 @@ const features = [
   {
     name: 'Beautiful Themes',
     description: 'Choose from multiple modern themes and layouts to match your style.',
+    icon: 'Layout',
   },
   {
     name: 'Custom Domains',
     description: 'Connect your own domain or use our href.lol subdomain.',
+    icon: 'Globe',
   },
   {
     name: 'Analytics',
     description: 'Track your profile views and link clicks with detailed analytics.',
+    icon: 'BarChart2',
   },
   {
     name: 'Badge System',
     description: 'Show off your achievements with custom badges on your profile.',
+    icon: 'Badge',
   },
   {
     name: 'Mobile First',
     description: 'Your bio page looks great on any device, from mobile to desktop.',
+    icon: 'Smartphone',
   },
   {
     name: 'AI Powered',
     description: 'Let AI help you create the perfect bio page with our smart generator.',
+    icon: 'Bot',
   },
 ]

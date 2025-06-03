@@ -3,6 +3,13 @@
 import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import { Providers } from './providers'
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'], // Regular, SemiBold, Bold
+  variable: '--font-poppins',
+});
 
 // Removed font configurations since we are using system fonts via Tailwind
 // const inter = localFont({...})
@@ -36,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${poppins.variable} font-sans`}>
       <body className="min-h-screen bg-dark-100 text-white antialiased">
         <Providers>
           {children}
