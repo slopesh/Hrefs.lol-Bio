@@ -14,8 +14,6 @@ import {
   Bot,
   LucideIcon // Import LucideIcon type
 } from 'lucide-react'; // Import Lucide icons
-import 'locomotive-scroll/dist/locomotive-scroll.css';
-import LocomotiveScroll from 'locomotive-scroll';
 
 // Mapping of icon names to Lucide components
 const iconMap: { [key: string]: LucideIcon } = {
@@ -52,14 +50,19 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const scroll = new LocomotiveScroll({
-      el: document.querySelector('[data-scroll-container]') as HTMLElement,
-      smooth: true,
-      lerp: 0.08,
+    // Dynamically import LocomotiveScroll and its CSS only on the client
+    import('locomotive-scroll/dist/locomotive-scroll.css');
+    import('locomotive-scroll').then(({ default: LocomotiveScroll }) => {
+      const scroll = new LocomotiveScroll({
+        el: document.querySelector('[data-scroll-container]') as HTMLElement,
+        smooth: true,
+        lerp: 0.08,
+      });
+      // Clean up
+      return () => {
+        scroll.destroy();
+      };
     });
-    return () => {
-      scroll.destroy();
-    };
   }, []);
 
   return (
