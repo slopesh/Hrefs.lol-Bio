@@ -51,18 +51,26 @@ export default function Home() {
 
   useEffect(() => {
     // Dynamically import LocomotiveScroll and its CSS only on the client
-    import('locomotive-scroll/dist/locomotive-scroll.css');
-    import('locomotive-scroll').then(({ default: LocomotiveScroll }) => {
-      const scroll = new LocomotiveScroll({
-        el: document.querySelector('[data-scroll-container]') as HTMLElement,
-        smooth: true,
-        lerp: 0.08,
-      });
-      // Clean up
-      return () => {
-        scroll.destroy();
-      };
-    });
+    const loadLocomotiveScroll = async () => {
+      try {
+        await import('locomotive-scroll/dist/locomotive-scroll.css');
+        const { default: LocomotiveScroll } = await import('locomotive-scroll');
+        
+        const scroll = new LocomotiveScroll({
+          el: document.querySelector('[data-scroll-container]') as HTMLElement,
+          smooth: true,
+          lerp: 0.08,
+        });
+
+        return () => {
+          scroll.destroy();
+        };
+      } catch (error) {
+        console.error('Failed to load LocomotiveScroll:', error);
+      }
+    };
+
+    loadLocomotiveScroll();
   }, []);
 
   return (
