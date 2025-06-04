@@ -37,6 +37,7 @@ model User {
   usedInviteCode     InviteCode?  @relation("UsedInviteCode")
   payments      Payment[]
   paymentMethods PaymentMethod[]
+  userSettings  UserSettings?
 }
 
 model BioPage {
@@ -155,4 +156,14 @@ enum PaymentType {
   CARD
   BANK_TRANSFER
   PAYPAL
+}
+
+model UserSettings {
+  id                 String  @id @default(cuid())
+  userId             String  @unique
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  publicProfile      Boolean @default(true)
+  emailNotifications Boolean @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 } 

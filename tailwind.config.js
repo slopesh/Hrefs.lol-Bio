@@ -27,24 +27,20 @@ module.exports = {
         'dark-300': '#4a5568',
         'dark-400': '#718096',
         'dark-500': '#a0aec0',
-        background: '#111111',
+        background: '#000000',
+        border: '#1a1a1a',
+        line: '#222',
         text: {
-          DEFAULT: '#d1d5db',
+          DEFAULT: '#e5e7eb',
           secondary: '#9ca3af',
         },
       },
       fontFamily: {
         sans: [
-          'SF Pro Display',
           'SF Pro Text',
-          'ui-sans-serif',
-          'system-ui',
           '-apple-system',
           'BlinkMacSystemFont',
-          'Segoe UI',
-          'Roboto',
           'Helvetica Neue',
-          'Arial',
           'sans-serif',
         ],
         poppins: [

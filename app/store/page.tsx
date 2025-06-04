@@ -91,8 +91,14 @@ export default function StorePage() {
               {/* PayPal Placeholder */}
               <Card className="w-36 h-24 flex flex-col items-center justify-center text-text-DEFAULT text-sm border border-dark-300 cursor-pointer transition-colors hover:bg-dark-300 bg-dark-200">
                 <CardContent className="flex flex-col items-center justify-center p-0">
-                   {/* PayPal Icon Placeholder */}
-                  <div className="text-3xl mb-2">🅿️</div>
+                  <svg className="w-8 h-8 mb-2" viewBox="0 0 1024 1024">
+                    <title>PayPal Logo</title>
+                    <path className="path1" fill="#003087" d="M790.4 0H233.6C104.6 0 0 104.6 0 233.6v556.8C0 919.4 104.6 1024 233.6 1024h556.8c129 0 233.6-104.6 233.6-233.6V233.6C1024 104.6 919.4 0 790.4 0z"/>
+                    <path className="path2" fill="#009cde" d="M790.4 0H233.6C104.6 0 0 104.6 0 233.6v556.8C0 919.4 104.6 1024 233.6 1024h556.8c129 0 233.6-104.6 233.6-233.6V233.6C1024 104.6 919.4 0 790.4 0z"/>
+                    <path className="path3" fill="#ffffff" d="M512 512m-256 0a256 256 0 1 0 512 0 256 256 0 1 0-512 0"/>
+                    <path className="path4" fill="#003087" d="M512 512m-192 0a192 192 0 1 0 384 0 192 192 0 1 0-384 0"/>
+                    <path className="path5" fill="#ffffff" d="M512 512m-128 0a128 128 0 1 0 256 0 128 128 0 1 0-256 0"/>
+                  </svg>
                   <span>PayPal</span>
                 </CardContent>
               </Card>
