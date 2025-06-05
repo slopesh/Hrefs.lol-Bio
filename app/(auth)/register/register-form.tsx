@@ -11,6 +11,12 @@ export default function RegisterForm() {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
+  const validateInviteCode = (code: string) => {
+    // Basic format validation: alphanumeric, 6-12 characters
+    const inviteCodeRegex = /^[a-zA-Z0-9]{6,12}$/
+    return inviteCodeRegex.test(code)
+  }
+
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError('')
@@ -21,6 +27,13 @@ export default function RegisterForm() {
     const password = formData.get('password') as string
     const username = formData.get('username') as string
     const inviteCode = formData.get('inviteCode') as string
+
+    // Validate invite code format
+    if (!validateInviteCode(inviteCode)) {
+      setError('Invalid invite code format')
+      setLoading(false)
+      return
+    }
 
     try {
       const res = await fetch('/api/auth/register', {
