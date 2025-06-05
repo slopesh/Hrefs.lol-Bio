@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { User, BarChart2, Palette, Link2, Image, Gem, LayoutDashboard, Settings, LogOut, Github, Twitter, Youtube, Linkedin, Instagram, Twitch, Facebook, Globe, Star, Crown, ShieldCheck, Wrench, Award, UserCheck, Rocket, Zap, Medal, KeyRound, UserPlus, UserCog, User2, CheckCircle2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
