@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { FiArrowRight, FiGithub, FiTwitter } from 'react-icons/fi'
 import BioCard from './components/BioCard'
 import { motion } from 'framer-motion'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Layout,
   Globe,
@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import './globals.css'
 import { Button } from '@/components/ui/button'
+import dynamic from 'next/dynamic'
 
 // Mapping of icon names to Lucide components
 const iconMap: { [key: string]: LucideIcon } = {
@@ -31,7 +32,14 @@ const iconMap: { [key: string]: LucideIcon } = {
   Bot: Bot,
 };
 
+// Dynamically import LocomotiveScroll with no SSR
+const LocomotiveScroll = dynamic(() => import('locomotive-scroll'), {
+  ssr: false
+});
+
 export default function Home() {
+  const [isClient, setIsClient] = useState(false);
+
   // Scroll reveal variants
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -56,27 +64,31 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Dynamically import LocomotiveScroll and its CSS only on the client
-    const loadLocomotiveScroll = async () => {
-      try {
-        await import('locomotive-scroll/dist/locomotive-scroll.css');
-        const { default: LocomotiveScroll } = await import('locomotive-scroll');
-        
-        const scroll = new LocomotiveScroll({
-          el: document.querySelector('[data-scroll-container]') as HTMLElement,
-          smooth: true,
-          lerp: 0.08,
-        });
+    setIsClient(true);
+    
+    if (typeof window !== 'undefined') {
+      // Import CSS and initialize LocomotiveScroll
+      const initScroll = async () => {
+        try {
+          await import('locomotive-scroll/dist/locomotive-scroll.css');
+          const { default: LocomotiveScroll } = await import('locomotive-scroll');
+          
+          const scroll = new LocomotiveScroll({
+            el: document.querySelector('[data-scroll-container]') as HTMLElement,
+            smooth: true,
+            lerp: 0.08,
+          });
 
-        return () => {
-          scroll.destroy();
-        };
-      } catch (error) {
-        console.error('Failed to load LocomotiveScroll:', error);
-      }
-    };
+          return () => {
+            scroll.destroy();
+          };
+        } catch (error) {
+          console.error('Failed to load LocomotiveScroll:', error);
+        }
+      };
 
-    loadLocomotiveScroll();
+      initScroll();
+    }
   }, []);
 
   return (
@@ -101,7 +113,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[#0f0f0f]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#232323] via-[#0f0f0f] to-[#0f0f0f] opacity-50"></div>
         </div>
-        
+
         <div className="relative max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -146,7 +158,7 @@ export default function Home() {
               <p className="text-gray-400 text-hover-animate">
                 Make it yours with our powerful customization options
               </p>
-            </div>
+                </div>
             <div className="p-6 rounded-2xl bg-[#181818] border border-[#232323] border-hover scale-hover">
               <Zap className="h-8 w-8 text-white mb-4" />
               <h3 className="text-xl font-semibold mb-2 text-gradient-hover">Lightning Fast</h3>
@@ -159,13 +171,13 @@ export default function Home() {
               <h3 className="text-xl font-semibold mb-2 text-gradient-hover">Analytics</h3>
               <p className="text-gray-400 text-hover-animate">
                 Track your visitors and optimize your content
-              </p>
-            </div>
+            </p>
+          </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Footer */}
+        {/* Footer */}
       <footer className="border-t border-[#232323] py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
@@ -177,9 +189,9 @@ export default function Home() {
               <Link href="/terms" className="text-hover-animate text-sm">Terms</Link>
               <Link href="/contact" className="text-hover-animate text-sm">Contact</Link>
             </div>
+            </div>
           </div>
-        </div>
-      </footer>
+        </footer>
     </div>
   )
 }
