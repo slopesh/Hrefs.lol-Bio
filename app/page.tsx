@@ -12,8 +12,14 @@ import {
   Badge,
   Smartphone,
   Bot,
-  LucideIcon // Import LucideIcon type
-} from 'lucide-react'; // Import Lucide icons
+  LucideIcon,
+  ArrowRight,
+  ChevronRight,
+  Star,
+  Zap
+} from 'lucide-react';
+import '@/styles/animations.css'
+import { Button } from '@/components/ui/button'
 
 // Mapping of icon names to Lucide components
 const iconMap: { [key: string]: LucideIcon } = {
@@ -74,175 +80,106 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-text font-sans overflow-x-hidden">
+    <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins">
       {/* Navigation */}
-      <nav className="border-b border-border bg-background sticky top-0 z-50">
+      <nav className="border-b border-[#232323] bg-[#0f0f0f] sticky top-0 z-50">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="text-xl font-bold text-white font-poppins">href.lol</Link>
+          <div className="flex items-center">
+            <Link href="/" className="text-xl font-bold text-white font-poppins">href.lol</Link>
+          </div>
           <div className="flex items-center space-x-6">
-            <Link href="/store" className="text-text-secondary hover:text-white font-sans font-semibold">Store</Link>
-            <Link href="/discord" className="text-text-secondary hover:text-white font-sans font-semibold">Discord</Link>
-            <Link href="/login" className="text-text-secondary hover:text-white font-sans font-semibold">Login</Link>
-            <Link href="/register" className="text-text-secondary hover:text-white font-sans font-semibold">Register</Link>
+            <Link href="/store" className="text-hover-animate font-poppins font-semibold">Store</Link>
+            <Link href="/discord" className="text-hover-animate font-poppins font-semibold">Discord</Link>
+            <Link href="/login" className="text-hover-animate font-poppins font-semibold">Login</Link>
+            <Link href="/register" className="text-hover-animate font-poppins font-semibold">Register</Link>
           </div>
         </div>
       </nav>
 
-      <div data-scroll-container>
-        {/* Hero Section */}
-        <main className="flex-1">
-          <motion.section
-            className="py-16 border-b border-line"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.6 }}
-            variants={fadeUp}
+      {/* Hero Section */}
+      <section className="relative flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0 bg-[#0f0f0f]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#232323] via-[#0f0f0f] to-[#0f0f0f] opacity-50"></div>
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            <div className="mx-auto max-w-3xl text-center px-4">
-              <h1 className="text-5xl sm:text-6xl font-poppins font-bold text-white mb-6">Your Bio Link,<br /><span className="text-white">Elevated</span></h1>
-              <p className="mt-4 text-lg text-text-secondary font-sans max-w-xl mx-auto">Create a stunning bio page that stands out. Add your links, customize your style, and share your story with the world.</p>
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <div className="relative w-full sm:w-auto">
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <span className="text-text-secondary font-sans select-none">href.lol/</span>
-                  </div>
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    className="block w-64 sm:w-72 rounded-[12px] border border-border bg-background py-2 pl-[5.5rem] pr-3 text-text placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-white font-sans text-base font-medium transition-colors duration-200 shadow-none"
-                    placeholder="username"
-                    autoComplete="off"
-                    spellCheck={false}
-                    style={{ fontWeight: 500, fontFamily: 'SF Pro Text, -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif' }}
-                  />
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  className="border border-white bg-black text-white font-semibold font-sans rounded-[12px] px-6 py-2 transition-colors duration-200 hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white text-base shadow-none"
-                  style={{ fontWeight: 600 }}
-                >
-                  Claim Your Link
-                </motion.button>
-              </div>
+            <h1 className="text-4xl sm:text-6xl font-bold mb-6 text-gradient-hover">
+              Your Bio Link,<br />
+              <span className="text-gradient-hover">Your Style</span>
+            </h1>
+            <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto text-hover-animate">
+              Create a stunning bio link page that matches your unique style. 
+              Perfect for creators, influencers, and anyone who wants to stand out.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                className="bg-white text-black hover:bg-white/90 transition-all duration-300 scale-hover"
+                size="lg"
+              >
+                Get Started <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                className="border-[#232323] hover:border-white/20 transition-all duration-300 scale-hover"
+                size="lg"
+              >
+                Learn More <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
             </div>
-          </motion.section>
+          </motion.div>
 
-          {/* Featured Users Section */}
-          <motion.section
-            className="py-16 border-b border-line"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            variants={fadeUp}
+          {/* Features Grid */}
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="mx-auto max-w-4xl text-center px-4">
-              <h2 className="text-3xl sm:text-4xl font-poppins font-semibold text-white mb-10">What are you waiting for? Join the other 14,958 users.</h2>
-              <div className="flex flex-wrap justify-center gap-4">
-                {["@sheng", "@jshy", "@certii", "@unslayy", "@dma", "@hoax", "@xootzie", "@maybescripted"].map((user, i) => (
-                  <motion.div
-                    key={user}
-                    className="w-32 h-12 rounded-[12px] bg-background flex items-center justify-center text-text text-sm font-sans border border-border hover:scale-105 transition-transform duration-200 cursor-pointer select-none"
-                    whileHover={{ scale: 1.05 }}
-                    custom={i}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                    variants={fadeUp}
-                  >
-                    {user}
-                  </motion.div>
-                ))}
-              </div>
+            <div className="p-6 rounded-2xl bg-[#181818] border border-[#232323] border-hover scale-hover">
+              <Star className="h-8 w-8 text-white mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-gradient-hover">Customizable</h3>
+              <p className="text-gray-400 text-hover-animate">
+                Make it yours with our powerful customization options
+              </p>
             </div>
-          </motion.section>
+            <div className="p-6 rounded-2xl bg-[#181818] border border-[#232323] border-hover scale-hover">
+              <Zap className="h-8 w-8 text-white mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-gradient-hover">Lightning Fast</h3>
+              <p className="text-gray-400 text-hover-animate">
+                Optimized for speed and performance
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-[#181818] border border-[#232323] border-hover scale-hover">
+              <Star className="h-8 w-8 text-white mb-4" />
+              <h3 className="text-xl font-semibold mb-2 text-gradient-hover">Analytics</h3>
+              <p className="text-gray-400 text-hover-animate">
+                Track your visitors and optimize your content
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-          {/* Example Bios Section */}
-          <div className="py-16 border-b border-line">
-            <div className="mx-auto max-w-5xl text-center px-4">
-              <div className="mt-12 flex justify-center">
-                <a href="#features-section" onClick={handleSmoothScroll} className="text-text-secondary text-lg font-semibold font-sans hover:text-white flex items-center transition-colors duration-200">
-                  Learn More
-                  <span className="ml-2 text-xl">↓</span>
-                </a>
-              </div>
+      {/* Footer */}
+      <footer className="border-t border-[#232323] py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-gray-400 text-sm">
+              © 2024 href.lol. All rights reserved.
+            </div>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <Link href="/privacy" className="text-hover-animate text-sm">Privacy</Link>
+              <Link href="/terms" className="text-hover-animate text-sm">Terms</Link>
+              <Link href="/contact" className="text-hover-animate text-sm">Contact</Link>
             </div>
           </div>
-
-          {/* Features Section */}
-          <motion.section
-            id="features-section"
-            className="mx-auto max-w-7xl px-4 py-16 border-b border-line"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            variants={fadeUp}
-          >
-            <div className="mx-auto max-w-2xl text-center rounded-xl border border-border p-6">
-              <h2 className="text-base font-poppins font-semibold text-white">Everything you need</h2>
-              <p className="mt-2 text-3xl sm:text-4xl font-poppins font-semibold text-white">Features that make your bio page shine</p>
-            </div>
-            <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-              <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-12 lg:max-w-none lg:grid-cols-3">
-                {features.map((feature, i) => {
-                  const IconComponent = iconMap[feature.icon as keyof typeof iconMap];
-                  return (
-                    <motion.div
-                      key={feature.name}
-                      className="flex flex-col rounded-xl border border-border bg-background p-6 shadow-none hover:scale-105 transition-transform duration-200"
-                      whileHover={{ scale: 1.05 }}
-                      custom={i}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true, amount: 0.2 }}
-                      variants={fadeUp}
-                    >
-                      <dt className="flex items-center gap-x-3 text-lg font-poppins font-semibold text-white">
-                        {IconComponent && <IconComponent className="h-6 w-6 flex-none text-white" aria-hidden="true" />}
-                        {feature.name}
-                      </dt>
-                      <dd className="mt-4 flex-auto text-base text-text font-sans">
-                        <p className="font-sans">{feature.description}</p>
-                      </dd>
-                    </motion.div>
-                  );
-                })}
-              </dl>
-            </div>
-          </motion.section>
-
-          {/* Footer */}
-          <footer className="border-t border-line bg-background py-12">
-            <div className="mx-auto max-w-7xl px-4">
-              <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
-                <span className="text-2xl font-bold text-white font-poppins">href.lol</span>
-                <div className="flex flex-col md:flex-row gap-8">
-                  <div className="text-center md:text-left">
-                    <h3 className="text-lg font-poppins font-semibold text-white mb-4">Contact</h3>
-                    <ul className="space-y-2">
-                      <li><a href="#" className="text-text-secondary hover:text-white text-sm font-sans font-semibold">Abuse</a></li>
-                      <li><a href="#" className="text-text-secondary hover:text-white text-sm font-sans font-semibold">Privacy</a></li>
-                      <li><a href="#" className="text-text-secondary hover:text-white text-sm font-sans font-semibold">Support</a></li>
-                    </ul>
-                  </div>
-                  <div className="text-center md:text-left">
-                    <h3 className="text-lg font-poppins font-semibold text-white mb-4">Information</h3>
-                    <ul className="space-y-2">
-                      <li><a href="#" className="text-text-secondary hover:text-white text-sm font-sans font-semibold">Terms of Service</a></li>
-                      <li><a href="#" className="text-text-secondary hover:text-white text-sm font-sans font-semibold">Platform Guidelines</a></li>
-                      <li><a href="#" className="text-text-secondary hover:text-white text-sm font-sans font-semibold">Privacy Policy</a></li>
-                      <li><a href="#" className="text-text-secondary hover:text-white text-sm font-sans font-semibold">FAQ</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8 border-t border-line pt-8 text-center">
-                <p className="text-text-secondary text-sm font-sans font-semibold">&copy; {new Date().getFullYear()} href.lol. All rights reserved. Est. 2025.</p>
-              </div>
-            </div>
-          </footer>
-        </main>
-      </div>
+        </div>
+      </footer>
     </div>
   )
 }

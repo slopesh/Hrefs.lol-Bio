@@ -46,6 +46,16 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
+  const isDashboardRoute = pathname.startsWith('/dashboard')
+
+  if (isDashboardRoute) {
+    // Check if user has valid invite code
+    const hasValidInvite = token.inviteCode && token.inviteCodeVerified
+    if (!hasValidInvite) {
+      return NextResponse.redirect(new URL('/auth/invite', request.url))
+    }
+  }
+
   return NextResponse.next()
 }
 

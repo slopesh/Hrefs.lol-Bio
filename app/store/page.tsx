@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreditCard, Bitcoin, CircleDollarSign } from "lucide-react";
+import { motion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,88 +54,64 @@ const Footer = () => (
 
 export default function StorePage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-text-DEFAULT font-sans overflow-hidden">
+    <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins overflow-hidden">
       {/* Navigation */}
-      <nav className="border-b border-dark-300 bg-dark-200/50 backdrop-blur-sm">
+      <nav className="border-b border-[#232323] bg-[#0f0f0f] sticky top-0 z-50">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-semibold text-white font-poppins">
-              href.lol
-            </Link>
+            <Link href="/" className="text-xl font-bold text-white font-poppins">href.lol</Link>
           </div>
           <div className="flex items-center space-x-6">
-            <Link href="/store" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Store
-            </Link>
-            <Link href="/discord" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Discord
-            </Link>
-            <Link href="/login" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Login
-            </Link>
-            <Link href="/register" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Register
-            </Link>
+            <Link href="/store" className="text-gray-400 hover:text-white font-poppins font-semibold transition-colors">Store</Link>
+            <Link href="/discord" className="text-gray-400 hover:text-white font-poppins font-semibold transition-colors">Discord</Link>
+            <Link href="/login" className="text-gray-400 hover:text-white font-poppins font-semibold transition-colors">Login</Link>
+            <Link href="/register" className="text-gray-400 hover:text-white font-poppins font-semibold transition-colors">Register</Link>
           </div>
         </div>
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 py-12">
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl font-poppins">Store</h1>
-
-          {/* Main Store Section */}
-          <div className="mt-12">
-            <h2 className="text-2xl font-semibold text-white mb-6 font-poppins">Main Store</h2>
-            <div className="flex justify-center">
-              {/* PayPal Placeholder */}
-              <Card className="w-36 h-24 flex flex-col items-center justify-center text-text-DEFAULT text-sm border border-dark-300 cursor-pointer transition-colors hover:bg-dark-300 bg-dark-200">
-                <CardContent className="flex flex-col items-center justify-center p-0">
-                  <svg className="w-8 h-8 mb-2" viewBox="0 0 1024 1024">
-                    <title>PayPal Logo</title>
-                    <path className="path1" fill="#003087" d="M790.4 0H233.6C104.6 0 0 104.6 0 233.6v556.8C0 919.4 104.6 1024 233.6 1024h556.8c129 0 233.6-104.6 233.6-233.6V233.6C1024 104.6 919.4 0 790.4 0z"/>
-                    <path className="path2" fill="#009cde" d="M790.4 0H233.6C104.6 0 0 104.6 0 233.6v556.8C0 919.4 104.6 1024 233.6 1024h556.8c129 0 233.6-104.6 233.6-233.6V233.6C1024 104.6 919.4 0 790.4 0z"/>
-                    <path className="path3" fill="#ffffff" d="M512 512m-256 0a256 256 0 1 0 512 0 256 256 0 1 0-512 0"/>
-                    <path className="path4" fill="#003087" d="M512 512m-192 0a192 192 0 1 0 384 0 192 192 0 1 0-384 0"/>
-                    <path className="path5" fill="#ffffff" d="M512 512m-128 0a128 128 0 1 0 256 0 128 128 0 1 0-256 0"/>
-                  </svg>
-                  <span>PayPal</span>
-                </CardContent>
-              </Card>
-            </div>
+      <main className="flex-1 flex flex-col items-center justify-center py-16 px-4 sm:px-0">
+        <h1 className="text-5xl font-poppins font-bold text-white mb-10">Store</h1>
+        <div className="mb-12 w-full max-w-md mx-auto">
+          <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Main Store</h2>
+          <div className="flex justify-center">
+            <motion.div
+              whileHover={{ scale: 1.08, boxShadow: '0 0 24px #fff' }}
+              className="bg-[#181818] rounded-2xl p-8 flex flex-col items-center shadow-none border border-[#232323] w-full max-w-xs transition-all duration-200 group"
+            >
+              <CreditCard className="w-10 h-10 mb-3 text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.5)] group-hover:animate-pulse" strokeWidth={2.5} />
+              <span className="text-lg font-poppins font-medium text-white mb-2">PayPal</span>
+            </motion.div>
           </div>
-
-          {/* Resellers Section */}
-          <div className="mt-12">
-            <h2 className="text-2xl font-semibold text-white mb-6 font-poppins">Resellers</h2>
-            <div className="flex justify-center gap-6">
-              {/* Card Placeholder */}
-              <Card className="w-36 h-24 flex flex-col items-center justify-center text-text-DEFAULT text-sm border border-dark-300 cursor-pointer transition-colors hover:bg-dark-300 bg-dark-200">
-                 <CardContent className="flex flex-col items-center justify-center p-0">
-                   <CreditCard className="text-3xl mb-2" />
-                   <span>Card</span>
-                 </CardContent>
-              </Card>
-              {/* Crypto Placeholder */}
-              <Card className="w-36 h-24 flex flex-col items-center justify-center text-text-DEFAULT text-sm border border-dark-300 cursor-pointer transition-colors hover:bg-dark-300 bg-dark-200">
-                 <CardContent className="flex flex-col items-center justify-center p-0">
-                   <Bitcoin className="text-3xl mb-2" />
-                   <span>Crypto</span>
-                 </CardContent>
-              </Card>
-              {/* Russian Placeholder */}
-              <Card className="w-36 h-24 flex flex-col items-center justify-center text-text-DEFAULT text-sm border border-dark-300 cursor-pointer transition-colors hover:bg-dark-300 bg-dark-200">
-                 <CardContent className="flex flex-col items-center justify-center p-0">
-                   <CircleDollarSign className="text-3xl mb-2" /> {/* Using a generic currency icon */}
-                   <span>Russian</span>
-                 </CardContent>
-              </Card>
-            </div>
+        </div>
+        <div className="w-full max-w-2xl mx-auto">
+          <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Resellers</h2>
+          <div className="flex flex-wrap gap-6 justify-center">
+            <motion.div
+              whileHover={{ scale: 1.08, boxShadow: '0 0 24px #fff' }}
+              className="bg-[#181818] rounded-2xl p-8 flex flex-col items-center shadow-none border border-[#232323] w-40 transition-all duration-200 group"
+            >
+              <CreditCard className="w-10 h-10 mb-3 text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.5)] group-hover:animate-pulse" strokeWidth={2.5} />
+              <span className="text-lg font-poppins font-medium text-white mb-2">Card</span>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.08, boxShadow: '0 0 24px #fbbf24' }}
+              className="bg-[#181818] rounded-2xl p-8 flex flex-col items-center shadow-none border border-[#232323] w-40 transition-all duration-200 group"
+            >
+              <Bitcoin className="w-10 h-10 mb-3 text-yellow-400 drop-shadow-[0_0_12px_rgba(251,191,36,0.7)] group-hover:animate-pulse" strokeWidth={2.5} />
+              <span className="text-lg font-poppins font-medium text-white mb-2">Crypto</span>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.08, boxShadow: '0 0 24px #60a5fa' }}
+              className="bg-[#181818] rounded-2xl p-8 flex flex-col items-center shadow-none border border-[#232323] w-40 transition-all duration-200 group"
+            >
+              <CircleDollarSign className="w-10 h-10 mb-3 text-blue-400 drop-shadow-[0_0_12px_rgba(96,165,250,0.7)] group-hover:animate-pulse" strokeWidth={2.5} />
+              <span className="text-lg font-poppins font-medium text-white mb-2">Russian</span>
+            </motion.div>
           </div>
         </div>
       </main>
-
       {/* Footer */}
       <Footer />
     </div>

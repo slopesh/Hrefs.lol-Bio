@@ -45,44 +45,30 @@ const Footer = () => (
 
 export default function DiscordPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-text-DEFAULT font-sans overflow-hidden">
+    <div className="flex min-h-screen flex-col bg-background text-text font-sans overflow-hidden">
       {/* Navigation */}
-      <nav className="border-b border-dark-300 bg-dark-200/50 backdrop-blur-sm">
+      <nav className="border-b border-border bg-background sticky top-0 z-50">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-semibold text-white font-poppins">
-              href.lol
-            </Link>
+            <Link href="/" className="text-xl font-bold text-white font-poppins">href.lol</Link>
           </div>
           <div className="flex items-center space-x-6">
-            <Link href="/store" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Store
-            </Link>
-            <Link href="/discord" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Discord
-            </Link>
-            <Link href="/login" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Login
-            </Link>
-            <Link href="/register" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Register
-            </Link>
+            <Link href="/store" className="text-text-secondary hover:text-white font-sans font-semibold">Store</Link>
+            <Link href="/discord" className="text-text-secondary hover:text-white font-sans font-semibold">Discord</Link>
+            <Link href="/login" className="text-text-secondary hover:text-white font-sans font-semibold">Login</Link>
+            <Link href="/register" className="text-text-secondary hover:text-white font-sans font-semibold">Register</Link>
           </div>
         </div>
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 py-12 flex justify-center items-center">
+      <main className="flex-1 flex flex-col items-center justify-center py-16">
         <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl font-poppins mb-8">Join our Discord</h1>
-          <p className="text-text-DEFAULT text-lg mb-8 font-sans">Connect with the community and get support.</p>
-          {/* Placeholder for Discord Join Button/Link */}
-          <a href="#" className="btn btn-primary bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg text-lg font-poppins transition-colors duration-200">
-            Join Discord
-          </a>
+          <h1 className="text-4xl font-poppins font-bold tracking-tight text-white sm:text-5xl mb-8">Join our Discord</h1>
+          <p className="text-text-secondary text-lg font-sans mb-8">Connect with the community and get support.</p>
+          <a href="#" className="btn btn-primary bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg text-lg font-poppins transition-colors duration-200">Join Discord</a>
         </div>
       </main>
-
       {/* Footer */}
       <Footer />
     </div>
