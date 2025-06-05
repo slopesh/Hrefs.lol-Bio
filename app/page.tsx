@@ -18,7 +18,7 @@ import {
   Star,
   Zap
 } from 'lucide-react';
-import '@/styles/animations.css'
+import './globals.css'
 import { Button } from '@/components/ui/button'
 
 // Mapping of icon names to Lucide components

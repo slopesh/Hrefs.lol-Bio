@@ -219,4 +219,31 @@
     background-size: 200% 200%;
     background-position: right center;
   }
+}
+
+@layer utilities {
+  .text-hover-animate {
+    @apply text-gray-400 transition-colors duration-300 hover:text-white;
+  }
+
+  .text-gradient-hover {
+    @apply bg-gradient-to-r from-gray-400 to-gray-400 bg-clip-text text-transparent 
+           transition-all duration-300 hover:from-white hover:to-white;
+  }
+
+  .scale-hover {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  .opacity-hover {
+    @apply transition-opacity duration-300 hover:opacity-80;
+  }
+
+  .border-hover {
+    @apply transition-colors duration-300 hover:border-white/20;
+  }
+
+  .bg-hover {
+    @apply transition-colors duration-300 hover:bg-white/10;
+  }
 } 
