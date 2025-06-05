@@ -1,0 +1,14 @@
+{
+  "homepage": {
+    "background": {
+      "type": "halftone-waves",
+      "halftoneWavesSettings": {
+        "color1": "#0A0A0A",
+        "color2": "#1a1a1a",
+        "amplitude": 50,
+        "frequency": 10,
+        "speed": 1
+      }
+    }
+  }
+} 

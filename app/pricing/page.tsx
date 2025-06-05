@@ -45,18 +45,18 @@ const Footer = () => (
 
 export default function PricingPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-text font-sans overflow-hidden">
+    <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins overflow-hidden">
       {/* Navigation */}
-      <nav className="border-b border-border bg-background sticky top-0 z-50">
+      <nav className="border-b border-[#232323] bg-[#0f0f0f] sticky top-0 z-50">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold text-white font-poppins">href.lol</Link>
           </div>
           <div className="flex items-center space-x-6">
-            <Link href="/store" className="text-text-secondary hover:text-white font-sans font-semibold">Store</Link>
-            <Link href="/discord" className="text-text-secondary hover:text-white font-sans font-semibold">Discord</Link>
-            <Link href="/login" className="text-text-secondary hover:text-white font-sans font-semibold">Login</Link>
-            <Link href="/register" className="text-text-secondary hover:text-white font-sans font-semibold">Register</Link>
+            <Link href="/store" className="text-hover-animate font-poppins font-semibold">Store</Link>
+            <Link href="/discord" className="text-hover-animate font-poppins font-semibold">Discord</Link>
+            <Link href="/login" className="text-hover-animate font-poppins font-semibold">Login</Link>
+            <Link href="/register" className="text-hover-animate font-poppins font-semibold">Register</Link>
           </div>
         </div>
       </nav>

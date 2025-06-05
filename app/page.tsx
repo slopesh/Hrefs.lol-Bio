@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { FiArrowRight, FiGithub, FiTwitter } from 'react-icons/fi'
 import BioCard from './components/BioCard'
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import React from 'react'
 import {
   Layout,
   Globe,
@@ -21,6 +22,7 @@ import {
 import './globals.css'
 import { Button } from '@/components/ui/button'
 import dynamic from 'next/dynamic'
+import BackgroundContainer from '../components/backgrounds/BackgroundContainer'
 
 // Mapping of icon names to Lucide components
 const iconMap: { [key: string]: LucideIcon } = {
@@ -39,6 +41,7 @@ const LocomotiveScroll = dynamic(() => import('locomotive-scroll'), {
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
+  const scrollRef = useRef(null);
 
   // Scroll reveal variants
   const fadeUp = {
@@ -57,9 +60,13 @@ export default function Home() {
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute('href')?.substring(1);
-    const targetElement = document.getElementById(targetId as string);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
+    if (scrollRef.current && targetId) {
+      (scrollRef.current as any).scrollTo(`#${targetId}`, { duration: 1000, easing: [0.76, 0, 0.24, 1] });
+    } else {
+      const targetElement = document.getElementById(targetId as string);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -78,9 +85,11 @@ export default function Home() {
             smooth: true,
             lerp: 0.08,
           });
+          scrollRef.current = scroll;
 
           return () => {
             scroll.destroy();
+            scrollRef.current = null;
           };
         } catch (error) {
           console.error('Failed to load LocomotiveScroll:', error);
@@ -92,7 +101,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins">
+    <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins" data-scroll-container>
+      <BackgroundContainer />
+
       {/* Navigation */}
       <nav className="border-b border-[#232323] bg-[#0f0f0f] sticky top-0 z-50">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -110,75 +121,87 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 bg-[#0f0f0f]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#232323] via-[#0f0f0f] to-[#0f0f0f] opacity-50"></div>
-        </div>
-
         <div className="relative max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            viewport={{ once: true, amount: 0.5 }}
           >
-            <h1 className="text-4xl sm:text-6xl font-bold mb-6 text-gradient-hover">
+            <motion.h1
+              variants={fadeUp}
+              custom={1}
+              className="text-4xl sm:text-6xl font-bold mb-6 text-gradient-hover"
+            >
               Your Bio Link,<br />
               <span className="text-gradient-hover">Your Style</span>
-            </h1>
-            <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto text-hover-animate">
-              Create a stunning bio link page that matches your unique style. 
+            </motion.h1>
+            <motion.p
+              variants={fadeUp}
+              custom={2}
+              className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto text-hover-animate"
+            >
+              Create a stunning bio link page that matches your unique style.
               Perfect for creators, influencers, and anyone who wants to stand out.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
+            </motion.p>
+            <motion.div
+              variants={fadeUp}
+              custom={3}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Button
                 className="bg-white text-black hover:bg-white/90 transition-all duration-300 scale-hover"
                 size="lg"
               >
                 Get Started <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="border-[#232323] hover:border-white/20 transition-all duration-300 scale-hover"
                 size="lg"
               >
-                Learn More <ChevronRight className="ml-2 h-5 w-5" />
+                <Link href="#features" onClick={handleSmoothScroll} className="flex items-center justify-center">
+                 Learn More <ChevronRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Features Grid */}
-          <motion.div 
+          <motion.div
+            id="features"
             className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20"
+            whileInView={{ opacity: 1, y: 0 }}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true, amount: 0.3 }}
           >
-            <div className="p-6 rounded-2xl bg-[#181818] border border-[#232323] border-hover scale-hover">
-              <Star className="h-8 w-8 text-white mb-4" />
-              <h3 className="text-xl font-semibold mb-2 text-gradient-hover">Customizable</h3>
-              <p className="text-gray-400 text-hover-animate">
-                Make it yours with our powerful customization options
-              </p>
-                </div>
-            <div className="p-6 rounded-2xl bg-[#181818] border border-[#232323] border-hover scale-hover">
-              <Zap className="h-8 w-8 text-white mb-4" />
-              <h3 className="text-xl font-semibold mb-2 text-gradient-hover">Lightning Fast</h3>
-              <p className="text-gray-400 text-hover-animate">
-                Optimized for speed and performance
-              </p>
-            </div>
-            <div className="p-6 rounded-2xl bg-[#181818] border border-[#232323] border-hover scale-hover">
-              <Star className="h-8 w-8 text-white mb-4" />
-              <h3 className="text-xl font-semibold mb-2 text-gradient-hover">Analytics</h3>
-              <p className="text-gray-400 text-hover-animate">
-                Track your visitors and optimize your content
-            </p>
-          </div>
+            {features.map((feature, i) => (
+              <motion.div
+                key={feature.name}
+                variants={fadeUp}
+                custom={i}
+                className="p-6 rounded-2xl bg-[#181818] border border-[#232323] border-hover scale-hover"
+              >
+                {isClient && iconMap[feature.icon] && React.createElement(iconMap[feature.icon], { className: "h-8 w-8 text-white mb-4" })}
+                <h3 className="text-xl font-semibold mb-2 text-gradient-hover">{feature.name}</h3>
+                <p className="text-gray-400 text-hover-animate">
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-        {/* Footer */}
-      <footer className="border-t border-[#232323] py-8">
+      {/* Footer */}
+      <motion.footer
+        className="border-t border-[#232323] py-8"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm">
@@ -189,9 +212,9 @@ export default function Home() {
               <Link href="/terms" className="text-hover-animate text-sm">Terms</Link>
               <Link href="/contact" className="text-hover-animate text-sm">Contact</Link>
             </div>
-            </div>
           </div>
-        </footer>
+        </div>
+      </motion.footer>
     </div>
   )
 }

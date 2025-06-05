@@ -4,12 +4,14 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { signIn } from 'next-auth/react'
 import { FiEye, FiEyeOff } from 'react-icons/fi'
+import Link from 'next/link'
 
 export default function RegisterForm() {
   const router = useRouter()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [agreeToTos, setAgreeToTos] = useState(false)
 
   const validateInviteCode = (code: string) => {
     // Basic format validation: alphanumeric, 6-12 characters
@@ -27,6 +29,13 @@ export default function RegisterForm() {
     const password = formData.get('password') as string
     const username = formData.get('username') as string
     const inviteCode = formData.get('inviteCode') as string
+
+    // Validate TOS agreement
+    if (!agreeToTos) {
+      setError('Please agree to the terms of service.')
+      setLoading(false)
+      return
+    }
 
     // Validate invite code format
     if (!validateInviteCode(inviteCode)) {
@@ -153,6 +162,21 @@ export default function RegisterForm() {
             className="input"
           />
         </div>
+      </div>
+
+      <div className="flex items-center">
+        <input
+          id="agreeToTos"
+          name="agreeToTos"
+          type="checkbox"
+          checked={agreeToTos}
+          onChange={(e) => setAgreeToTos(e.target.checked)}
+          required
+          className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-600 rounded bg-[#181818]"
+        />
+        <label htmlFor="agreeToTos" className="ml-2 block text-sm text-gray-400">
+          I have read and agree to the <Link href="/terms" className="text-primary-400 hover:text-white transition-colors duration-200">Terms of Service</Link>
+        </label>
       </div>
 
       <div>

@@ -45,29 +45,18 @@ const Footer = () => (
 
 export default function ShowcasePage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-text-DEFAULT font-sans overflow-hidden">
+    <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins overflow-hidden">
       {/* Navigation */}
-      <nav className="border-b border-dark-300 bg-dark-200/50 backdrop-blur-sm">
+      <nav className="border-b border-[#232323] bg-[#0f0f0f] sticky top-0 z-50">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-semibold text-white font-poppins">
-              href.lol
-            </Link>
+            <Link href="/" className="text-xl font-bold text-white font-poppins">href.lol</Link>
           </div>
           <div className="flex items-center space-x-6">
-            {/* Add Showcase link here later */}
-            <Link href="/store" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Store
-            </Link>
-            <Link href="/discord" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Discord
-            </Link>
-            <Link href="/login" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Login
-            </Link>
-            <Link href="/register" className="text-text-DEFAULT hover:text-white transition-colors duration-200 font-sans">
-              Register
-            </Link>
+            <Link href="/store" className="text-hover-animate font-poppins font-semibold">Store</Link>
+            <Link href="/discord" className="text-hover-animate font-poppins font-semibold">Discord</Link>
+            <Link href="/login" className="text-hover-animate font-poppins font-semibold">Login</Link>
+            <Link href="/register" className="text-hover-animate font-poppins font-semibold">Register</Link>
           </div>
         </div>
       </nav>

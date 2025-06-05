@@ -164,6 +164,10 @@
   @apply transition-transform hover:scale-105;
 }
 
+.text-hover-animate {
+  @apply text-gray-400 hover:text-white transition-colors duration-200;
+}
+
 /* Glass effect */
 .glass {
   @apply bg-dark-100/80 backdrop-blur-sm border border-dark-200/50;

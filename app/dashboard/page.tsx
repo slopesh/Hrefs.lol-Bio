@@ -1,178 +1,288 @@
 'use client';
 
 import Link from 'next/link';
-import { User, BarChart2, Palette, Link2, Image, Gem, LayoutDashboard, Settings, LogOut, Github, Twitter, Youtube, Linkedin, Instagram, Twitch, Facebook, Globe, Star, Crown, ShieldCheck, Wrench, Award, UserCheck, Rocket, Zap, Medal, KeyRound, UserPlus, UserCog, User2, CheckCircle2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ConnectionModal } from '@/components/ui/connection-modal';
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { useToast } from '@/components/ui/use-toast';
-import { Loader2 } from 'lucide-react';
+import { LayoutDashboard, Settings, LogOut, User, BarChart2, CreditCard, Users, ChevronRight } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { useState, useEffect } from 'react';
+import { formatCurrency } from '@/lib/utils'; // Assuming you have a utility to format currency
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { cn } from '@/lib/utils'; // Assuming cn utility is here or imported elsewhere
+import { BadgesAchievements } from '@/components/dashboard/badges-achievements';
+import { SocialConnections } from "@/components/dashboard/social-connections";
 
-const sidebarLinks = [
-  { name: 'Overview', icon: LayoutDashboard, href: '/dashboard' },
-  { name: 'Analytics', icon: BarChart2, href: '/dashboard/analytics' },
-  { name: 'Customize', icon: Palette, href: '/dashboard/customize' },
-  { name: 'Links', icon: Link2, href: '/dashboard/links' },
-  { name: 'Media', icon: Image, href: '/dashboard/media' },
-  { name: 'Premium', icon: Gem, href: '/dashboard/premium' },
-  { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
-];
+interface DashboardStats {
+  newUsersToday: number;
+  totalUsers: number;
+  transactionsToday: number;
+  nonUsers: number;
+  newUsersPercentageChange: number;
+  totalUsersPercentageChange: number;
+  transactionsPercentageChange: number;
+  nonUsersPercentageChange: number;
+}
 
-const connections = [
-  { name: 'GitHub', icon: Github, color: 'text-white', bg: 'bg-[#232323]' },
-  { name: 'Twitter', icon: Twitter, color: 'text-blue-400', bg: 'bg-[#232323]' },
-  { name: 'YouTube', icon: Youtube, color: 'text-red-500', bg: 'bg-[#232323]' },
-  { name: 'LinkedIn', icon: Linkedin, color: 'text-blue-600', bg: 'bg-[#232323]' },
-  { name: 'Instagram', icon: Instagram, color: 'text-pink-500', bg: 'bg-[#232323]' },
-  { name: 'Discord', icon: Globe, color: 'text-indigo-400', bg: 'bg-[#232323]' },
-  { name: 'Twitch', icon: Twitch, color: 'text-purple-500', bg: 'bg-[#232323]' },
-  { name: 'Facebook', icon: Facebook, color: 'text-blue-500', bg: 'bg-[#232323]' },
-  { name: 'Website', icon: Globe, color: 'text-gray-300', bg: 'bg-[#232323]' },
-];
+interface MonthlyTransactionData {
+  month: string;
+  volume: number;
+}
 
-const badges = [
-  { name: 'VIP', icon: Star, color: 'text-yellow-400', bg: 'bg-[#232323]', desc: 'VIP User' },
-  { name: 'Premium', icon: Gem, color: 'text-pink-400', bg: 'bg-[#232323]', desc: 'Premium Member' },
-  { name: 'Owner', icon: Crown, color: 'text-yellow-500', bg: 'bg-[#232323]', desc: 'Owner of the platform' },
-  { name: 'Staff', icon: ShieldCheck, color: 'text-blue-400', bg: 'bg-[#232323]', desc: 'Staff Member' },
-  { name: 'Developer', icon: Wrench, color: 'text-green-400', bg: 'bg-[#232323]', desc: 'Platform Developer' },
-  { name: 'OG', icon: Award, color: 'text-orange-400', bg: 'bg-[#232323]', desc: 'Original Member' },
-  { name: 'Verified', icon: CheckCircle2, color: 'text-blue-400', bg: 'bg-[#232323]', desc: 'Verified User' },
-  { name: 'Influencer', icon: UserCheck, color: 'text-purple-400', bg: 'bg-[#232323]', desc: 'Influencer' },
-  { name: 'Rocket', icon: Rocket, color: 'text-pink-400', bg: 'bg-[#232323]', desc: 'Growth Hacker' },
-  { name: 'Zap', icon: Zap, color: 'text-yellow-300', bg: 'bg-[#232323]', desc: 'Power User' },
-  { name: 'Medalist', icon: Medal, color: 'text-orange-300', bg: 'bg-[#232323]', desc: 'Top Performer' },
-  { name: 'Key', icon: KeyRound, color: 'text-gray-400', bg: 'bg-[#232323]', desc: 'Security Expert' },
-  { name: 'Early', icon: UserPlus, color: 'text-green-300', bg: 'bg-[#232323]', desc: 'Early Adopter' },
-  { name: 'Customizer', icon: Palette, color: 'text-pink-300', bg: 'bg-[#232323]', desc: 'Theme Customizer' },
-  { name: 'Admin', icon: UserCog, color: 'text-red-400', bg: 'bg-[#232323]', desc: 'Admin' },
-];
+interface RecentTransaction {
+  id: string;
+  userName: string;
+  date: string;
+  amount: number;
+  type: 'credit' | 'debit';
+  userInitial: string;
+}
 
-// Add type for social
-type SocialType = typeof connections[number];
+interface ConnectionData {
+  social: Array<{
+    id: string;
+    title: string;
+    url: string;
+    icon?: string;
+  }>;
+  websites: Array<{
+    id: string;
+    title: string;
+    url: string;
+    icon?: string;
+  }>;
+  total: number;
+}
 
+// This will be the main dashboard overview page
 export default function DashboardPage() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedSocial, setSelectedSocial] = useState<SocialType | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [transactionData, setTransactionData] = useState<MonthlyTransactionData[]>([]);
+  const [recentTransactions, setRecentTransactions] = useState<RecentTransaction[]>([]);
+  const [badgesData, setBadgesData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [connectionData, setConnectionData] = useState<ConnectionData | null>(null);
 
-  const handleOpenModal = (social: SocialType) => {
-    setSelectedSocial(social);
-    setModalOpen(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [statsRes, transactionsRes, badgesRes, connectionsRes] = await Promise.all([
+          fetch('/api/dashboard/stats'),
+          fetch('/api/dashboard/transactions-overview'),
+          fetch('/api/dashboard/badges'),
+          fetch('/api/dashboard/connections')
+        ]);
+
+        if (!statsRes.ok || !transactionsRes.ok || !badgesRes.ok || !connectionsRes.ok) {
+          throw new Error('Failed to fetch dashboard data');
+        }
+
+        const [stats, transactions, badges, connections] = await Promise.all([
+          statsRes.json(),
+          transactionsRes.json(),
+          badgesRes.json(),
+          connectionsRes.json()
+        ]);
+
+        setStats(stats);
+        setTransactionData(transactions);
+        setBadgesData(badges);
+        setConnectionData(connections);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Helper function to format percentage change with sign and color
+  const formatPercentageChange = (change: number) => {
+    const colorClass = change >= 0 ? 'text-green-500' : 'text-red-500';
+    const sign = change > 0 ? '+' : '';
+    return <span className={colorClass}>{`${sign}${change}%`}</span>;
   };
 
-  const handleAddConnection = async (data: { mode: 'link' | 'text'; value: string }) => {
-    setIsLoading(true);
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: 'Success!',
-        description: `Added ${selectedSocial?.name} connection successfully.`,
-        className: 'bg-green-500 text-white',
-      });
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to add connection. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-      setModalOpen(false);
+   // Custom tooltip for the chart
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="p-2 bg-[#181818] text-white text-sm rounded-md border border-[#232323] shadow-lg">
+          <p className="font-semibold">{`${label}`}</p>
+          <p>{`Volume: ${formatCurrency(payload[0].value)}`}</p>
+        </div>
+      );
     }
+    return null;
   };
+
+
+  if (loading) {
+    return <div className="flex min-h-screen items-center justify-center bg-[#0f0f0f] text-white">Loading dashboard...</div>;
+  }
+
+  if (error) {
+    return <div className="flex min-h-screen items-center justify-center bg-[#0f0f0f] text-red-500">Error: {error}</div>;
+  }
+
+  // Render dashboard only if stats are available (transactionData and recentTransactions might be empty)
+  if (!stats) {
+      return null; // Or a fallback UI
+  }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white font-poppins">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-4xl font-bold mb-12 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent"
-        >
-          Social Connections
-        </motion.h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {connections.map((social, index) => (
-            <motion.div
-              key={social.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: '0 0 30px rgba(255,255,255,0.1)',
-              }}
-              whileTap={{ scale: 0.98 }}
-              className={cn(
-                "group bg-[#181818] rounded-2xl p-6 border border-[#232323]",
-                "hover:border-white/20 transition-all duration-300 cursor-pointer",
-                "backdrop-blur-sm"
-              )}
-              onClick={() => handleOpenModal(social)}
-            >
-              <div className="flex items-center gap-4">
-                <motion.div 
-                  className={cn(
-                    "p-3 rounded-xl transition-all duration-300",
-                    "bg-gradient-to-br from-[#232323] to-[#181818]"
-                  )}
-                  whileHover={{ 
-                    scale: 1.1,
-                    rotate: 3,
-                    boxShadow: '0 0 20px rgba(255,255,255,0.1)',
-                  }}
-                >
-                  <social.icon 
-                    className={cn(
-                      `w-8 h-8 ${social.color}`,
-                      "drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]",
-                      "transition-all duration-300"
-                    )} 
-                    strokeWidth={2.5} 
-                  />
-                </motion.div>
-                <div>
-                  <motion.span 
-                    className="text-xl font-semibold block"
-                    initial={{ color: 'rgba(255,255,255,0.7)' }}
-                    whileHover={{ 
-                      color: 'rgba(255,255,255,1)',
-                      textShadow: '0 0 8px rgba(255,255,255,0.3)',
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {social.name}
-                  </motion.span>
-                  <motion.p 
-                    className="text-sm mt-1"
-                    initial={{ color: 'rgba(255,255,255,0.5)' }}
-                    whileHover={{ color: 'rgba(255,255,255,0.8)' }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    Add your {social.name} profile
-                  </motion.p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+    <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins">
+      {/* Assuming sidebar is handled in a layout file - main content area below */}
+      <main className="flex flex-1 flex-col p-8 md:p-10">
+
+        {/* Dashboard Header */}
+        <div className="flex items-center justify-between space-y-2 mb-8">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+            <p className="text-gray-400">Overview of your platform statistics and performance.</p>
+          </div>
+          {/* Optional: Add header actions like date picker or filter */}
         </div>
-      </div>
-      <AnimatePresence>
-        {selectedSocial && (
-          <ConnectionModal
-            isOpen={modalOpen}
-            onClose={() => setModalOpen(false)}
-            social={selectedSocial}
-            onAdd={handleAddConnection}
-            isLoading={isLoading}
-          />
+
+        {/* Stats Cards Section */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+          {/* New Users Card */}
+          <Card className="bg-[#181818] border-[#232323] rounded-lg">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">New Users Today</CardTitle>
+              <User className="h-4 w-4 text-gray-400" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.newUsersToday}</div>
+              <p className="text-xs text-gray-400">{formatPercentageChange(stats.newUsersPercentageChange)} from yesterday</p>
+            </CardContent>
+          </Card>
+
+          {/* Total Users Card */}
+           <Card className="bg-[#181818] border-[#232323] rounded-lg">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+              <Users className="h-4 w-4 text-gray-400" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.totalUsers}</div>
+              <p className="text-xs text-gray-400">{formatPercentageChange(stats.totalUsersPercentageChange)} from last week</p>
+            </CardContent>
+          </Card>
+
+          {/* Transactions Today Card */}
+           <Card className="bg-[#181818] border-[#232323] rounded-lg">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Transactions Today</CardTitle>
+              <CreditCard className="h-4 w-4 text-gray-400" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{formatCurrency(stats.transactionsToday)}</div>
+              <p className="text-xs text-gray-400">{formatPercentageChange(stats.transactionsPercentageChange)} from yesterday</p>
+            </CardContent>
+          </Card>
+
+          {/* Non-Users Card */}
+           <Card className="bg-[#181818] border-[#232323] rounded-lg">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Non-Users</CardTitle>
+              <User className="h-4 w-4 text-gray-400" /> {/* Using User icon as a placeholder */}
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stats.nonUsers}</div>
+              <p className="text-xs text-gray-400">{formatPercentageChange(stats.nonUsersPercentageChange)} from yesterday</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Badges & Achievements Section */}
+        {badgesData && (
+          <div className="mb-8">
+            <BadgesAchievements
+              badges={badgesData.badges}
+              achievements={badgesData.achievements}
+              isPremium={badgesData.isPremium}
+              premiumExpiresAt={badgesData.premiumExpiresAt}
+            />
+          </div>
         )}
-      </AnimatePresence>
+
+        {/* Social Connections Section */}
+        {connectionData && (
+          <div className="mt-6">
+            <h2 className="text-2xl font-bold text-white mb-4">Social Connections</h2>
+            <SocialConnections
+              social={connectionData.social}
+              websites={connectionData.websites}
+              total={connectionData.total}
+            />
+          </div>
+        )}
+
+        {/* Transaction Overview and Recent Transactions Section */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {/* Transaction Overview Chart */}
+          <Card className="col-span-2 bg-[#181818] border-[#232323] rounded-lg">
+            <CardHeader>
+              <CardTitle>Transaction Overview</CardTitle>
+              <CardDescription>Transaction volume over time</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="h-60">
+                     <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={transactionData} margin={{
+                            top: 5,
+                            right: 10,
+                            left: 10,
+                            bottom: 5,
+                        }}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#232323" />
+                            <XAxis dataKey="month" stroke="#9ca3af" />
+                            <YAxis stroke="#9ca3af" tickFormatter={(value) => formatCurrency(value, '', 'en-US')} />
+                            <Tooltip content={<CustomTooltip />} cursor={{ fill: '#232323' }} />
+                            <Bar dataKey="volume" fill="#38bdf8" />
+                        </BarChart>
+                     </ResponsiveContainer>
+                </div>
+            </CardContent>
+          </Card>
+
+          {/* Recent Transactions List */}
+          <Card className="col-span-1 bg-[#181818] border-[#232323] rounded-lg">
+             <CardHeader>
+              <CardTitle>Recent Transactions</CardTitle>
+              <CardDescription>Latest transactions on the platform</CardDescription>
+            </CardHeader>
+            <CardContent>
+                 <div className="space-y-4">
+                    {recentTransactions.length > 0 ? (
+                        recentTransactions.map(transaction => (
+                            <div key={transaction.id} className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2 rounded-md bg-[#232323]">
+                                         <div className="w-6 h-6 flex items-center justify-center text-white text-sm font-semibold">{transaction.userInitial}</div>
+                                    </div>
+                                    <div>
+                                        <p className="text-white font-medium">{transaction.userName}</p>
+                                        <p className="text-sm text-gray-400">{transaction.date}</p>
+                                    </div>
+                                </div>
+                                <div className={cn("flex items-center gap-1 text-sm font-semibold", transaction.type === 'credit' ? 'text-green-500' : 'text-red-500')}>
+                                    <span>{formatCurrency(transaction.amount)}</span>
+                                    <ChevronRight className="w-4 h-4" />
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                         <div className="h-full flex items-center justify-center text-gray-400">
+                            No recent transactions.
+                        </div>
+                    )}
+                 </div>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
     </div>
   );
 } 
