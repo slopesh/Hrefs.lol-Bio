@@ -7,52 +7,14 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreditCard, Bitcoin, CircleDollarSign } from "lucide-react";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from "@/components/ui/button";
+import { CardDescription, CardFooter } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
+import Footer from '@/components/ui/footer';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// Placeholder for footer (can be a separate component later)
-const Footer = () => (
-  <footer className="border-t border-dark-300 bg-dark-200/50 backdrop-blur-sm py-12">
-    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
-        {/* Logo Area */}
-        <div className="flex items-center">
-          {/* Placeholder for Logo */}
-          <span className="text-2xl font-bold text-white font-poppins">href.lol</span>
-        </div>
-
-        {/* Footer Links */}
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="text-center md:text-left">
-            <h3 className="text-lg font-semibold text-white mb-4 font-poppins">Contact</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Abuse</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Privacy</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Support</a></li>
-            </ul>
-          </div>
-          <div className="text-center md:text-left">
-            <h3 className="text-lg font-semibold text-white mb-4 font-poppins">Information</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Terms of Service</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Platform Guidelines</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Privacy Policy</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">FAQ</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Copyright */}
-      <div className="mt-8 border-t border-dark-300 pt-8 text-center">
-        <p className="text-text-secondary text-sm font-sans">
-          &copy; {new Date().getFullYear()} href.lol. All rights reserved. Est. 2025.
-        </p>
-      </div>
-    </div>
-  </footer>
-);
 
 export default function StorePage() {
   return (
@@ -73,48 +35,251 @@ export default function StorePage() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center py-16 px-4 sm:px-0">
-        <h1 className="text-5xl font-poppins font-bold text-white mb-10">Store</h1>
-        <div className="mb-12 w-full max-w-md mx-auto">
-          <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Main Store</h2>
-          <div className="flex justify-center">
-            <motion.div
-              whileHover={{ scale: 1.08, boxShadow: '0 0 24px #fff' }}
-              className="bg-[#181818] rounded-2xl p-8 flex flex-col items-center shadow-none border border-[#232323] w-full max-w-xs transition-all duration-200 group"
-            >
-              <CreditCard className="w-10 h-10 mb-3 text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.5)] group-hover:animate-pulse" strokeWidth={2.5} />
-              <span className="text-lg font-poppins font-medium text-white mb-2">PayPal</span>
-            </motion.div>
-          </div>
-        </div>
-        <div className="w-full max-w-2xl mx-auto">
-          <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Resellers</h2>
-          <div className="flex flex-wrap gap-6 justify-center">
-            <motion.div
-              whileHover={{ scale: 1.08, boxShadow: '0 0 24px #fff' }}
-              className="bg-[#181818] rounded-2xl p-8 flex flex-col items-center shadow-none border border-[#232323] w-40 transition-all duration-200 group"
-            >
-              <CreditCard className="w-10 h-10 mb-3 text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.5)] group-hover:animate-pulse" strokeWidth={2.5} />
-              <span className="text-lg font-poppins font-medium text-white mb-2">Card</span>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.08, boxShadow: '0 0 24px #fbbf24' }}
-              className="bg-[#181818] rounded-2xl p-8 flex flex-col items-center shadow-none border border-[#232323] w-40 transition-all duration-200 group"
-            >
-              <Bitcoin className="w-10 h-10 mb-3 text-yellow-400 drop-shadow-[0_0_12px_rgba(251,191,36,0.7)] group-hover:animate-pulse" strokeWidth={2.5} />
-              <span className="text-lg font-poppins font-medium text-white mb-2">Crypto</span>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.08, boxShadow: '0 0 24px #60a5fa' }}
-              className="bg-[#181818] rounded-2xl p-8 flex flex-col items-center shadow-none border border-[#232323] w-40 transition-all duration-200 group"
-            >
-              <CircleDollarSign className="w-10 h-10 mb-3 text-blue-400 drop-shadow-[0_0_12px_rgba(96,165,250,0.7)] group-hover:animate-pulse" strokeWidth={2.5} />
-              <span className="text-lg font-poppins font-medium text-white mb-2">Russian</span>
-            </motion.div>
-          </div>
-        </div>
+      <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-7xl"
+        >
+          <h1 className="text-5xl font-poppins font-bold text-white mb-10">Store</h1>
+          
+          <Tabs defaultValue="main" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-8 bg-[#181818]">
+              <TabsTrigger 
+                value="main"
+                className="data-[state=active]:bg-white data-[state=active]:text-black"
+              >
+                Main Store
+              </TabsTrigger>
+              <TabsTrigger 
+                value="invite"
+                className="data-[state=active]:bg-white data-[state=active]:text-black"
+              >
+                Invite Codes
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="main">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="bg-[#181818] border-[#232323] hover:border-white/20 transition-all duration-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl font-poppins">Premium Plan</CardTitle>
+                      <CardDescription className="text-gray-400">For power users</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-baseline">
+                          <span className="text-4xl font-bold">$29.9</span>
+                          <span className="text-gray-400 ml-2">/month</span>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Custom domain
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Advanced analytics
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Premium themes
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Priority support
+                          </li>
+                        </ul>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full bg-white text-black hover:bg-white/90">
+                        Purchase
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="bg-[#181818] border-[#232323] hover:border-white/20 transition-all duration-200 relative">
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-blue-600 text-white text-sm px-4 py-1 rounded-full">Popular</span>
+                    </div>
+                    <CardHeader>
+                      <CardTitle className="text-2xl font-poppins">BIZ Plan</CardTitle>
+                      <CardDescription className="text-gray-400">For businesses</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-baseline">
+                          <span className="text-4xl font-bold">$99.9</span>
+                          <span className="text-gray-400 ml-2">/month</span>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            All Premium features
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Multiple team members
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Custom branding
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            API access
+                          </li>
+                        </ul>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full bg-white text-black hover:bg-white/90">
+                        Purchase
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="bg-[#181818] border-[#232323] hover:border-white/20 transition-all duration-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl font-poppins">Custom Plan</CardTitle>
+                      <CardDescription className="text-gray-400">Tailored to your needs</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-baseline">
+                          <span className="text-4xl font-bold">Custom</span>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Custom features
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Dedicated support
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            White-label solution
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Custom integration
+                          </li>
+                        </ul>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full bg-white text-black hover:bg-white/90">
+                        Contact Sales
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </motion.div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="invite">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="bg-[#181818] border-[#232323] hover:border-white/20 transition-all duration-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl font-poppins">Single Invite</CardTitle>
+                      <CardDescription className="text-gray-400">One-time purchase</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-baseline">
+                          <span className="text-4xl font-bold">$25</span>
+                          <span className="text-gray-400 ml-2">one-time</span>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Lifetime access
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Basic features
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Early access
+                          </li>
+                        </ul>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full bg-white text-black hover:bg-white/90">
+                        Purchase
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="bg-[#181818] border-[#232323] hover:border-white/20 transition-all duration-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl font-poppins">Bundle Pack</CardTitle>
+                      <CardDescription className="text-gray-400">5 invite codes</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-baseline">
+                          <span className="text-4xl font-bold">$100</span>
+                          <span className="text-gray-400 ml-2">one-time</span>
+                        </div>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            5 invite codes
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            20% discount
+                          </li>
+                          <li className="flex items-center">
+                            <span className="text-green-500 mr-2">✓</span>
+                            Share with friends
+                          </li>
+                        </ul>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full bg-white text-black hover:bg-white/90">
+                        Purchase
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </motion.div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </motion.div>
       </main>
-      {/* Footer */}
+
       <Footer />
     </div>
   );

@@ -5,55 +5,52 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import Footer from '@/components/ui/footer';
 
 // Logo component
 const HrefLogo = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="lucide lucide-link w-12 h-12 text-white mb-4"
+  <motion.div
+    initial={{ scale: 0.8, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    transition={{ duration: 0.5 }}
   >
-    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.7" />
-  </svg>
-);
-
-// Footer component
-const Footer = () => (
-  <footer className="border-t border-[#232323] py-8">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row justify-between items-center">
-        <div className="text-gray-400 text-sm">
-          © 2024 href.lol. All rights reserved.
-        </div>
-        <div className="flex space-x-6 mt-4 md:mt-0">
-          <Link href="/privacy" className="text-hover-animate text-sm">Privacy</Link>
-          <Link href="/terms" className="text-hover-animate text-sm">Terms</Link>
-          <Link href="/contact" className="text-hover-animate text-sm">Contact</Link>
-        </div>
-      </div>
-    </div>
-  </footer>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-link w-12 h-12 text-white mb-4"
+    >
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.7" />
+    </svg>
+  </motion.div>
 );
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    // Handle login logic here
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate async op
-    setIsLoading(false);
+    setError('');
+
+    try {
+      // Handle login logic here
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate async op
+    } catch (err) {
+      setError('Invalid credentials. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -74,7 +71,7 @@ export default function LoginPage() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center py-16 px-4 sm:px-0">
+      <main className="flex-1 flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -89,6 +86,22 @@ export default function LoginPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
+              <AnimatePresence>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="mb-6"
+                  >
+                    <div className="rounded-md bg-red-500/10 p-4 text-sm text-red-400">
+                      {error}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <form className="grid gap-6" onSubmit={handleSubmit}>
                 <div className="grid gap-3">
                   <Label htmlFor="identifier" className="text-white/80">Username or Email</Label>
@@ -104,6 +117,7 @@ export default function LoginPage() {
                     )}
                   />
                 </div>
+                
                 <div className="grid gap-3">
                   <Label htmlFor="password" className="text-white/80">Password</Label>
                   <Input 
@@ -148,7 +162,6 @@ export default function LoginPage() {
         </motion.div>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

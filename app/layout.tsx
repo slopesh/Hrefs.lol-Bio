@@ -8,7 +8,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '600', '700'], // Regular, SemiBold, Bold
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-poppins',
 });
 
@@ -44,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${poppins.variable} font-sans`}>
+    <html lang="en" className={`${poppins.variable} font-poppins`}>
       <body className="min-h-screen bg-dark-100 text-white antialiased">
         <Providers>
           {children}

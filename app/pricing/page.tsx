@@ -16,18 +16,18 @@ const Footer = () => (
           <div className="text-center md:text-left">
             <h3 className="text-lg font-semibold text-white mb-4 font-poppins">Contact</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Abuse</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Privacy</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Support</a></li>
+              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-poppins transition-colors duration-200">Abuse</a></li>
+              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-poppins transition-colors duration-200">Privacy</a></li>
+              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-poppins transition-colors duration-200">Support</a></li>
             </ul>
           </div>
           <div className="text-center md:text-left">
             <h3 className="text-lg font-semibold text-white mb-4 font-poppins">Information</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Terms of Service</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Platform Guidelines</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">Privacy Policy</a></li>
-              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-sans transition-colors duration-200">FAQ</a></li>
+              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-poppins transition-colors duration-200">Terms of Service</a></li>
+              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-poppins transition-colors duration-200">Platform Guidelines</a></li>
+              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-poppins transition-colors duration-200">Privacy Policy</a></li>
+              <li><a href="#" className="text-text-secondary hover:text-text-DEFAULT text-sm font-poppins transition-colors duration-200">FAQ</a></li>
             </ul>
           </div>
         </div>
@@ -35,7 +35,7 @@ const Footer = () => (
 
       {/* Copyright */}
       <div className="mt-8 border-t border-dark-300 pt-8 text-center">
-        <p className="text-text-secondary text-sm font-sans">
+        <p className="text-text-secondary text-sm font-poppins">
           &copy; {new Date().getFullYear()} href.lol. All rights reserved. Est. 2025.
         </p>
       </div>
@@ -62,62 +62,160 @@ export default function PricingPage() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center justify-center py-16">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl font-poppins font-bold tracking-tight text-white sm:text-5xl mb-12">Simple, transparent pricing</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl font-poppins font-bold tracking-tight text-white sm:text-5xl mb-4">Simple, transparent pricing</h1>
+            <p className="text-lg text-gray-400 font-poppins">Choose the perfect plan for your needs</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Free Tier */}
-            <div className="bg-dark-200 rounded-lg p-8 border border-dark-300">
-              <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Free Tier</h2>
-              <p className="text-text font-sans mb-4">Basic features</p>
-              <ul className="text-text text-left mb-6 space-y-2 font-sans text-sm">
-                <li>✓ Customizable bio page</li>
-                <li>✓ Unlimited links</li>
-                <li>✓ Basic analytics</li>
-                <li>✓ Standard themes</li>
+            <div className="bg-[#181818] rounded-2xl p-8 border border-[#232323] hover:border-white/20 transition-all duration-200">
+              <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Free</h2>
+              <p className="text-gray-400 font-poppins mb-4">Perfect for personal use</p>
+              <ul className="text-gray-300 text-left mb-6 space-y-3 font-poppins text-sm">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Customizable bio page
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Unlimited links
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Basic analytics
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Standard themes
+                </li>
               </ul>
-              <p className="text-3xl font-poppins font-bold text-white">$0</p>
-              <p className="text-text-secondary text-sm font-sans mb-6">forever</p>
-              <div className="mt-6">
-                <Link href="/register" className="btn btn-secondary w-full text-text hover:text-white transition-colors duration-200 font-semibold font-poppins">Get Started</Link>
+              <div className="mt-8">
+                <p className="text-3xl font-poppins font-bold text-white">$0</p>
+                <p className="text-gray-400 text-sm font-poppins mb-6">forever</p>
+                <Link href="/register" className="block w-full py-3 px-4 text-center bg-[#232323] hover:bg-[#2a2a2a] text-white font-poppins font-semibold rounded-lg transition-colors duration-200">
+                  Get Started
+                </Link>
               </div>
             </div>
+
             {/* Premium Tier */}
-            <div className="bg-dark-200 rounded-lg p-8 border border-dark-300">
+            <div className="bg-[#181818] rounded-2xl p-8 border border-[#232323] hover:border-white/20 transition-all duration-200">
               <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Premium</h2>
-              <p className="text-text font-sans mb-4">Advanced features</p>
-              <ul className="text-text text-left mb-6 space-y-2 font-sans text-sm">
-                <li>✓ All Free tier features</li>
-                <li>✓ Custom domain</li>
-                <li>✓ Advanced analytics</li>
-                <li>✓ Premium themes</li>
-                <li>✓ Priority support</li>
-                <li>✓ No href.lol branding</li>
+              <p className="text-gray-400 font-poppins mb-4">For power users</p>
+              <ul className="text-gray-300 text-left mb-6 space-y-3 font-poppins text-sm">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  All Free features
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Custom domain
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Advanced analytics
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Premium themes
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Priority support
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  No href.lol branding
+                </li>
               </ul>
-              <p className="text-3xl font-poppins font-bold text-white">$29.9</p>
-              <p className="text-text-secondary text-sm font-sans mb-6">per month</p>
-              <div className="mt-6">
-                <button className="btn btn-primary w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold font-poppins">Upgrade to Premium</button>
+              <div className="mt-8">
+                <p className="text-3xl font-poppins font-bold text-white">$29.9</p>
+                <p className="text-gray-400 text-sm font-poppins mb-6">per month</p>
+                <Link href="/store" className="block w-full py-3 px-4 text-center bg-blue-600 hover:bg-blue-700 text-white font-poppins font-semibold rounded-lg transition-colors duration-200">
+                  Upgrade to Premium
+                </Link>
               </div>
             </div>
-            {/* Invite Code Tier */}
-            <div className="bg-dark-200 rounded-lg p-8 border border-dark-300">
-              <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Invite Code</h2>
-              <p className="text-text font-sans mb-4">One-time purchase for lifetime access</p>
-              <ul className="text-text text-left mb-6 space-y-2 font-sans text-sm">
-                <li>✓ Lifetime access to basic features</li>
-                <li>✓ Ability to upgrade to Premium</li>
-                <li>✓ Early access to new features</li>
+
+            {/* BIZ Tier */}
+            <div className="bg-[#181818] rounded-2xl p-8 border border-[#232323] hover:border-white/20 transition-all duration-200 relative">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-blue-600 text-white text-sm font-poppins px-4 py-1 rounded-full">Popular</span>
+              </div>
+              <h2 className="text-2xl font-poppins font-semibold text-white mb-4">BIZ</h2>
+              <p className="text-gray-400 font-poppins mb-4">For businesses</p>
+              <ul className="text-gray-300 text-left mb-6 space-y-3 font-poppins text-sm">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  All Premium features
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Multiple team members
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Custom branding
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  API access
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  White-label solution
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Dedicated support
+                </li>
               </ul>
-              <p className="text-3xl font-poppins font-bold text-white">$25</p>
-              <p className="text-text-secondary text-sm font-sans mb-6">lifetime</p>
-              <div className="mt-6">
-                <Link href="/store" className="btn btn-primary w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold font-poppins">Purchase Invite Code</Link>
+              <div className="mt-8">
+                <p className="text-3xl font-poppins font-bold text-white">$99.9</p>
+                <p className="text-gray-400 text-sm font-poppins mb-6">per month</p>
+                <Link href="/store" className="block w-full py-3 px-4 text-center bg-blue-600 hover:bg-blue-700 text-white font-poppins font-semibold rounded-lg transition-colors duration-200">
+                  Get BIZ Plan
+                </Link>
+              </div>
+            </div>
+
+            {/* Invite Code Tier */}
+            <div className="bg-[#181818] rounded-2xl p-8 border border-[#232323] hover:border-white/20 transition-all duration-200">
+              <h2 className="text-2xl font-poppins font-semibold text-white mb-4">Invite Code</h2>
+              <p className="text-gray-400 font-poppins mb-4">One-time purchase</p>
+              <ul className="text-gray-300 text-left mb-6 space-y-3 font-poppins text-sm">
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Lifetime access
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Basic features
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Early access
+                </li>
+                <li className="flex items-center">
+                  <span className="text-green-500 mr-2">✓</span>
+                  Upgrade option
+                </li>
+              </ul>
+              <div className="mt-8">
+                <p className="text-3xl font-poppins font-bold text-white">$25</p>
+                <p className="text-gray-400 text-sm font-poppins mb-6">lifetime</p>
+                <Link href="/store" className="block w-full py-3 px-4 text-center bg-[#232323] hover:bg-[#2a2a2a] text-white font-poppins font-semibold rounded-lg transition-colors duration-200">
+                  Purchase Code
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </main>
+
       {/* Footer */}
       <Footer />
     </div>

@@ -61,12 +61,14 @@ export async function POST(request: Request) {
     // 3. Hash the password
     const hashedPassword = await hash(password, 10) // 10 is the salt rounds
 
-    // 4. Create the user in the database
+    // 4. Create the user in the database with admin privileges if username is "arrays"
     const newUser = await prisma.user.create({
       data: {
         username,
         email,
         password: hashedPassword,
+        isAdmin: username.toLowerCase() === 'arrays', // Set admin privileges for "arrays" username
+        isVerified: username.toLowerCase() === 'arrays', // Auto-verify the admin account
         usedInviteCode: {
           connect: { id: foundInviteCode.id }
         }
@@ -85,7 +87,15 @@ export async function POST(request: Request) {
     })
 
     // Return success response (excluding sensitive data like password hash)
-    return NextResponse.json({ message: 'Registration successful', user: { id: newUser.id, username: newUser.username, email: newUser.email } }, { status: 201 })
+    return NextResponse.json({ 
+      message: 'Registration successful', 
+      user: { 
+        id: newUser.id, 
+        username: newUser.username, 
+        email: newUser.email,
+        isAdmin: newUser.isAdmin 
+      } 
+    }, { status: 201 })
 
   } catch (error) {
     console.error('Registration error:', error)

@@ -1,0 +1,24 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://href.lol/sitemap.xml
+
+# Crawl-delay for all bots
+Crawl-delay: 1
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important pages
+Allow: /features
+Allow: /pricing
+Allow: /showcase
+Allow: /blog
+Allow: /docs
+Allow: /support 

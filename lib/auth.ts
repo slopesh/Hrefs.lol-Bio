@@ -37,7 +37,8 @@ export const authOptions: AuthOptions = {
           id: user.id,
           name: user.username,
           email: user.email,
-          username: user.username
+          username: user.username,
+          isAdmin: user.isAdmin
         };
       }
     })
@@ -55,15 +56,7 @@ export const authOptions: AuthOptions = {
       if (user) {
         token.id = user.id;
         token.username = user.username;
-        
-        const dbUser = await prisma.user.findUnique({
-          where: { id: user.id as string },
-          select: { isAdmin: true },
-        });
-
-        if (dbUser) {
-          token.isAdmin = dbUser.isAdmin;
-        }
+        token.isAdmin = user.isAdmin;
       }
       return token;
     },
@@ -71,6 +64,7 @@ export const authOptions: AuthOptions = {
       if (token && session.user) {
         session.user.id = token.id;
         session.user.username = token.username;
+        session.user.isAdmin = token.isAdmin;
       }
       return session;
     },
