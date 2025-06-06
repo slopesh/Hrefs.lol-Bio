@@ -163,11 +163,19 @@ export default function DashboardPage() {
   };
 
   if (loading) {
-    return <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins items-center justify-center">Loading dashboard...</div>;
+    return (
+      <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-white font-poppins items-center justify-center">
+        Loading dashboard...
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-red-500 font-poppins items-center justify-center">Error: {error}</div>;\
+    return (
+      <div className="flex min-h-screen flex-col bg-[#0f0f0f] text-red-500 font-poppins items-center justify-center">
+        Error: {error}
+      </div>
+    );
   }
 
   return (
@@ -243,8 +251,14 @@ export default function DashboardPage() {
           <motion.div variants={itemVariants}>
             <Card className="bg-[#181818] border-[#232323] rounded-lg h-full">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-gray-400">UID</CardTitle> {/* Adjusted text color */}
-                <Copy className="h-4 w-4 text-gray-400 cursor-pointer hover:text-white transition-colors duration-200" onClick={() => navigator.clipboard.writeText(userData?.id || '')} title="Copy UID" /> {/* Added hover effect */}
+                <CardTitle className="text-sm font-medium text-gray-400">UID</CardTitle>
+                <button
+                  onClick={() => navigator.clipboard.writeText(userData?.id || '')}
+                  title="Copy UID"
+                  className="text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  <Copy className="h-4 w-4" />
+                </button>
               </CardHeader>
               <CardContent className="flex flex-col h-full justify-between">
                 <div>
