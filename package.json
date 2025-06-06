@@ -25,6 +25,7 @@
     "@types/puppeteer": "^7.0.4",
     "@vercel/analytics": "^1.5.0",
     "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.10.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.2",
